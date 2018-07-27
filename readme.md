@@ -103,6 +103,13 @@ steps:
 -   `templateUrl` is still relative to `index.html`
 -   since we use IIFE, I don't see the point of naming component options and controllers with a specific name by feature. I prefer more generic `componentOptions` and `controller` when naming option object and controller function
 
+to run prettier on all files :
+
+```
+npm install --save-dev --save-exact prettier
+npx prettier --write **/*.js
+```
+
 # initial readme
 
 ## Order System Sample Project
