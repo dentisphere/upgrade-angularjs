@@ -173,6 +173,43 @@ module.exports = {
 -   by default, output is created in dist/ (relative path to config file)
 -   at the moment, application still need to be served statically (`static-server`)
 
+## integrate typescript
+
+```
+npm install --save-dev typescript@2.7
+npm install --save-dev @types/angular
+npm install --save-dev ts-loader
+```
+
+Create a tsconfig.json file. Can be done by command `tsc --init`, or copy sample from [official documentation](https://angular.io/guide/typescript-configuration).
+
+add a module rule for .ts files:
+
+```javascript
+module.exports = {
+    // ...
+    module: {
+        rules: [
+            {
+                test: /\.ts?$/,
+                use: 'ts-loader',
+                exclude: /node_modules/,
+            },
+        ],
+    },
+    resolve: {
+        extensions: ['.ts', '.js'],
+    },
+    devtool: 'inline-source-map',
+};
+```
+
+rename app.js and home.js to .ts files, and fix errors by importing necessary files
+
+### remarks
+
+-   IIFE can be safely removed from components such as home.ts, since ts modules don't pollute global namespace
+
 # initial readme
 
 ## Order System Sample Project
