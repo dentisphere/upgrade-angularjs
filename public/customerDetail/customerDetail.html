@@ -17,10 +17,10 @@
         {{$ctrl.customer.getsDiscount ? 'Yes' : 'No'}}
     </div>
 </div>
-<div
+<discount
     data-ng-if="$ctrl.customer.getsDiscount"
-    data-ng-include="$ctrl.discountTemplate"
-></div>
+    customer-discount="$ctrl.customer.discount"
+></discount>
 <div
     class="row"
     data-ng-if="$ctrl.orders.length > 0"
