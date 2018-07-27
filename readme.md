@@ -143,6 +143,36 @@ If a template includes another template with `data-ng-include` directive, $ctrl 
 
 to illustrate one-way binding and callback to parent component
 
+## integrate webpack 4
+
+In this step, we use webpack to create a bundle from an entry point (app.js). The bundle result (public/dist/bundle.js) is included manually in index.html.
+We just want to initiate the bundle process, as a prerequisite for typescript integration
+
+```
+npm install --save-dev webpack webpack-cli clean-webpack-plugin
+```
+
+```javascript
+// webpack.config.js
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+
+module.exports = {
+    mode: 'development',
+    entry: './app.js',
+    output: {
+        filename: 'bundle.js',
+    },
+    plugins: [new CleanWebpackPlugin('dist')],
+};
+```
+
+### remarks
+
+-   generate the bundle with command `npx webpack`
+-   clean-webpack-plugin is useful for cleaning dist folder before generation the bundle
+-   by default, output is created in dist/ (relative path to config file)
+-   at the moment, application still need to be served statically (`static-server`)
+
 # initial readme
 
 ## Order System Sample Project

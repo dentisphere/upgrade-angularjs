@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    let componentOptions = {
+    let homeComponent = {
         templateUrl: './home/home.html',
         bindings: {},
         controller,
@@ -13,5 +13,5 @@
         ctrl.title = 'Awesome, Inc. Internal Ordering System';
     }
 
-    angular.module('app').component('home', componentOptions);
+    module.exports = { homeComponent };
 })();
