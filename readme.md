@@ -68,16 +68,40 @@ solution is [here](https://stackoverflow.com/questions/41211875/angularjs-1-6-0-
 
 ```javascript
 appModule.config([
-    "$locationProvider",
+    '$locationProvider',
     function($locationProvider) {
-        $locationProvider.hashPrefix("");
-    }
+        $locationProvider.hashPrefix('');
+    },
 ]);
 ```
 
 ### remarks
 
 Upgrading to 1.6 or 1.7 is not necessary. We mostly want to use angular 1.5+ so that directives can be converted to component, easing future migration to angular
+
+## converting controllers to components
+
+steps:
+
+-   include current code in IIFE + `'use strict'`
+-   create option object for component with fields
+    -   templateUrl
+    -   bindings
+    -   controller
+-   move controller function out of registration in module
+-   use $inject to avoid minification problems with dependencies and remove $scope from list of dependencies
+-   use a `ctrl` or `vm` variable to avoid closure problemes
+-   use $onInit for component initialisation, for instance to insure bindings have been made
+-   register component in module
+-   update template by adding `$ctrl.` to scope variables
+-   update route
+    -   `templateUrl` becomes a `template` with the component element
+    -   remove `controller`
+
+### remarks
+
+-   `templateUrl` is still relative to `index.html`
+-   since we use IIFE, I don't see the point of naming component options and controllers with a specific name by feature. I prefer more generic `componentOptions` and `controller` when naming option object and controller function
 
 # initial readme
 

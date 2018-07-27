@@ -1,64 +1,63 @@
-angular.module("app").config([
-    "$routeProvider",
+angular.module('app').config([
+    '$routeProvider',
     function($routeProvider) {
         $routeProvider
-            .when("/", {
-                templateUrl: "./home/home.html",
-                controller: "homeController"
+            .when('/', {
+                templateUrl: './home/home.html',
+                controller: 'homeController',
             })
-            .when("/customers", {
-                templateUrl: "./customers/customers.html",
-                controller: "customersController"
+            .when('/customers', {
+                template: '<customers></customers>',
             })
-            .when("/orders", {
-                templateUrl: "./orders/orders.html",
-                controller: "ordersController"
+            .when('/orders', {
+                templateUrl: './orders/orders.html',
+                controller: 'ordersController',
             })
-            .when("/products", {
-                templateUrl: "./products/products.html",
-                controller: "productsController"
+            .when('/products', {
+                templateUrl: './products/products.html',
+                controller: 'productsController',
             })
-            .when("/customers/:id", {
-                templateUrl: "./customerDetail/customerDetail.html",
-                controller: "customerDetailController",
+            .when('/customers/:id', {
+                templateUrl: './customerDetail/customerDetail.html',
+                controller: 'customerDetailController',
                 resolve: {
                     customer: [
-                        "$route",
-                        "customerService",
+                        '$route',
+                        'customerService',
                         function($route, customerService) {
                             var id = parseInt($route.current.params.id);
                             return customerService.getCustomer(id);
-                        }
-                    ]
-                }
+                        },
+                    ],
+                },
             })
-            .when("/orders/:id", {
-                templateUrl: "./orderDetail/orderDetail.html",
-                controller: "orderDetailController",
+            .when('/orders/:id', {
+                templateUrl: './orderDetail/orderDetail.html',
+                controller: 'orderDetailController',
                 resolve: {
                     order: [
-                        "$route",
-                        "orderService",
+                        '$route',
+                        'orderService',
                         function($route, orderService) {
                             var id = parseInt($route.current.params.id);
                             return orderService.getOrder(id);
-                        }
-                    ]
-                }
+                        },
+                    ],
+                },
             })
-            .when("/products/:id", {
-                templateUrl: "./productDetail/productDetail.html",
-                controller: "productDetailController",
+            .when('/products/:id', {
+                templateUrl: './productDetail/productDetail.html',
+                controller: 'productDetailController',
                 resolve: {
                     product: [
-                        "$route",
-                        "productService",
+                        '$route',
+                        'productService',
                         function($route, productService) {
                             var id = parseInt($route.current.params.id);
                             return productService.getProduct(id);
-                        }
-                    ]
-                }
+                        },
+                    ],
+                },
             });
-    }
+    },
 ]);

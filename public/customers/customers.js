@@ -1,9 +1,21 @@
-angular.module('app').controller('customersController', ['$scope', 'customerService', function($scope, customerService){
-    $scope.title = 'Customers';
+(function() {
+    'use strict';
 
-    activate();
+    let componentOptions = {
+        templateUrl: './customers/customers.html',
+        bindings: {},
+        controller,
+    };
 
-    function activate(){
-         $scope.customers = customerService.getCustomers();
+    controller.$inject = ['customerService'];
+    function controller(customerService) {
+        let ctrl = this;
+        ctrl.title = 'Customers';
+
+        ctrl.$onInit = function() {
+            ctrl.customers = customerService.getCustomers();
+        };
     }
-}]);
+
+    angular.module('app').component('customers', componentOptions);
+})();
