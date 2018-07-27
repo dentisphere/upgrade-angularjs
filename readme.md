@@ -20,6 +20,8 @@ Related controllers, directives, services, templates and so forth should be orga
 
 Be consisent in directory names. Sam Julien uses camelcase for features, for instance `customerDetails`
 
+Use a `shared` folder for services and factories that can be used in several elements.
+
 # initial readme
 
 ## Order System Sample Project
