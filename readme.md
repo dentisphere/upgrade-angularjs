@@ -98,6 +98,33 @@ steps:
     -   `templateUrl` becomes a `template` with the component element
     -   remove `controller`
 
+watch out when bound input must be synchronously resolved before creating element. bound input cannot be used before initialization
+
+```javascript
+ctrl.$onInit = function() {
+    // ctrl.customer is not ready before $onInit !
+    ctrl.address = addressFactory.getFullAddress(ctrl.customer);
+};
+```
+
+bound input must be bound using $resolve service
+
+```javascript
+.when('/customers/:id', {
+    template: '<customer-detail customer="$resolve.customer"></customer-detail>',
+    resolve: {
+        customer: [
+            '$route',
+            'customerService',
+            function($route, customerService) {
+                var id = parseInt($route.current.params.id);
+                return customerService.getCustomer(id);
+            },
+        ],
+    },
+})
+```
+
 ### remarks
 
 -   `templateUrl` is still relative to `index.html`
@@ -109,6 +136,8 @@ to run prettier on all files :
 npm install --save-dev --save-exact prettier
 npx prettier --write **/*.js
 ```
+
+If a template includes another template with `data-ng-include` directive, $ctrl must be used in included template... maybe a good idea would be to get rid of all data-ng-include before refactoring by creating a proper component ?
 
 # initial readme
 
