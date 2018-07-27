@@ -1,10 +1,12 @@
+const path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = {
     mode: 'development',
     entry: './app.ts',
     output: {
-        filename: 'bundle.js',
+        filename: 'dist/bundle.js',
+        path: path.resolve(__dirname),
     },
     module: {
         rules: [
@@ -19,5 +21,9 @@ module.exports = {
         extensions: ['.ts', '.js'],
     },
     plugins: [new CleanWebpackPlugin('dist')],
-    devtool: 'inline-source-map',
+    devtool: 'source-map',
+    devServer: {
+        contentBase: './',
+        port: 9000,
+    },
 };

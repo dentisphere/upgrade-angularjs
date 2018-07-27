@@ -210,6 +210,39 @@ rename app.js and home.js to .ts files, and fix errors by importing necessary fi
 
 -   IIFE can be safely removed from components such as home.ts, since ts modules don't pollute global namespace
 
+## add webpack-dev-server
+
+we don't want to generate bundle manually each time source change.
+
+```
+npm install --save-dev webpack-dev-server
+```
+
+```javascript
+module.exports = {
+    devtool: 'source-map',
+    devServer: {
+        contentBase: './',
+        port: 9000,
+    },
+};
+```
+
+### remarks
+
+because we still include bundle manually in index.html, output path can be tricky to configure in a way that works both with build prod **and** webpack-dev-server.
+
+solution is
+
+```javascript
+module.exports = {
+    output: {
+        filename: 'dist/bundle.js',
+        path: path.resolve(__dirname),
+    },
+};
+```
+
 # initial readme
 
 ## Order System Sample Project
