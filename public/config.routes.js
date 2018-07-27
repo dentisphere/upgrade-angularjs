@@ -33,7 +33,7 @@ angular.module("app").config([
                 }
             })
             .when("/orders/:id", {
-                templateUrl: "./templates/orderDetail.html",
+                templateUrl: "./orderDetail/orderDetail.html",
                 controller: "orderDetailController",
                 resolve: {
                     order: [
