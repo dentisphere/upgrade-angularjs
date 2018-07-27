@@ -22,6 +22,14 @@ Be consisent in directory names. Sam Julien uses camelcase for features, for ins
 
 Use a `shared` folder for services and factories that can be used in several elements.
 
+## move dependencies to npm
+
+in folder `public`, create a package.json with command
+
+```bash
+npm init
+```
+
 # initial readme
 
 ## Order System Sample Project
