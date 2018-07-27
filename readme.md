@@ -51,6 +51,29 @@ in order to prevent upgrading minor version of packages, before installing depen
 npm config set save-prefix=~
 ```
 
+## upgrade angular to lattest version
+
+upgrade one version at a time, and make sure nothing broke
+
+```
+npm install --save angular@1.4 angular-route@1.4
+npm install --save angular@1.5 angular-route@1.5
+npm install --save angular@1.6 angular-route@1.6
+```
+
+angular@1.6 broke something about hashprefix. solution is to add some explicit configuration
+
+solution is [here](https://stackoverflow.com/questions/41211875/angularjs-1-6-0-latest-now-routes-not-working)
+
+```javascript
+appModule.config([
+    "$locationProvider",
+    function($locationProvider) {
+        $locationProvider.hashPrefix("");
+    }
+]);
+```
+
 # initial readme
 
 ## Order System Sample Project
