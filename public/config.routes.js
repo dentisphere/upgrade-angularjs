@@ -30,8 +30,7 @@ angular.module('app').config([
                 },
             })
             .when('/orders/:id', {
-                templateUrl: './orderDetail/orderDetail.html',
-                controller: 'orderDetailController',
+                template: '<order-detail order="$resolve.order"></order-detail>',
                 resolve: {
                     order: [
                         '$route',

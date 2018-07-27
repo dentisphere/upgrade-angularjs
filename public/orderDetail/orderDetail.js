@@ -1,24 +1,31 @@
-angular.module('app').controller('orderDetailController', [
-    '$scope',
-    'order',
-    'productService',
-    'customerService',
-    function($scope, order, productService, customerService) {
-        $scope.title = 'Order Detail';
-        $scope.order = order;
+(function() {
+    'use strict';
 
-        activate();
+    let componentOptions = {
+        templateUrl: './orderDetail/orderDetail.html',
+        bindings: {
+            order: '<',
+        },
+        controller,
+    };
 
-        function activate() {
+    controller.$inject = ['productService', 'customerService'];
+    function controller(productService, customerService) {
+        let ctrl = this;
+        ctrl.title = 'Order Detail';
+
+        ctrl.$onInit = function() {
             var products = productService.getProducts();
-            $scope.customer = customerService.getCustomer($scope.order.customerId);
-            $scope.order.items.forEach(function(item) {
+            ctrl.customer = customerService.getCustomer(ctrl.order.customerId);
+            ctrl.order.items.forEach(function(item) {
                 var product = _.find(products, function(product) {
                     return product.id === item.productId;
                 });
                 item.productName = product.name;
                 item.itemPrice = item.quantity * product.price;
             });
-        }
-    },
-]);
+        };
+    }
+
+    angular.module('app').component('orderDetail', componentOptions);
+})();
