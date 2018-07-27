@@ -3,8 +3,7 @@ angular.module('app').config([
     function($routeProvider) {
         $routeProvider
             .when('/', {
-                templateUrl: './home/home.html',
-                controller: 'homeController',
+                template: '<home></home>',
             })
             .when('/customers', {
                 template: '<customers></customers>',
