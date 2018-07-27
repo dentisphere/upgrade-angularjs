@@ -7,7 +7,7 @@ angular.module("app").config([
                 controller: "homeController"
             })
             .when("/customers", {
-                templateUrl: "./templates/customers.html",
+                templateUrl: "./customers/customers.html",
                 controller: "customersController"
             })
             .when("/orders", {
