@@ -1,7 +1,13 @@
-angular.module('app').directive('navigation', function() {
-    return {
-        restrict: 'E',
+(function() {
+    'use strict';
+
+    let componentOptions = {
         templateUrl: './navigation/navigation.html',
-        link: function(scope, element, attrs, ctrl) {},
+        bindings: {},
+        controller,
     };
-});
+
+    function controller() {}
+
+    angular.module('app').component('navigation', componentOptions);
+})();
