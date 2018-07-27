@@ -9,8 +9,7 @@ angular.module('app').config([
                 template: '<customers></customers>',
             })
             .when('/orders', {
-                templateUrl: './orders/orders.html',
-                controller: 'ordersController',
+                template: '<orders></orders>',
             })
             .when('/products', {
                 templateUrl: './products/products.html',

@@ -1,21 +1,28 @@
-angular.module('app').controller('ordersController', [
-    '$scope',
-    'orderService',
-    'customerService',
-    function($scope, orderService, customerService) {
-        $scope.title = 'Orders';
+(function() {
+    'use strict';
 
-        activate();
+    let componentOptions = {
+        templateUrl: './orders/orders.html',
+        bindings: {},
+        controller,
+    };
 
-        function activate() {
-            $scope.customers = customerService.getCustomers();
-            $scope.orders = orderService.getOrders();
-            $scope.orders.forEach(function(order) {
-                var customer = _.find($scope.customers, function(customer) {
+    controller.$inject = ['orderService', 'customerService'];
+    function controller(orderService, customerService) {
+        let ctrl = this;
+        ctrl.title = 'Orders';
+
+        ctrl.$onInit = function() {
+            ctrl.customers = customerService.getCustomers();
+            ctrl.orders = orderService.getOrders();
+            ctrl.orders.forEach(function(order) {
+                var customer = _.find(ctrl.customers, function(customer) {
                     return order.customerId === customer.id;
                 });
                 order.customerName = customer.fullName;
             });
-        }
-    },
-]);
+        };
+    }
+
+    angular.module('app').component('orders', componentOptions);
+})();
