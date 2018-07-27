@@ -4,6 +4,20 @@
 
 Related controllers, directives, services, templates and so forth should be organized by feature. One directory by feature. Make sure not to mix several things in a single file.
 
+### instructions
+
+-   create directory for one feature
+-   move files to that directory
+-   update paths in config.routes.js and index.html
+
+### remarks
+
+templateUrl is relative to index.html, not to the .js file where directive is declared. Hence, url should be similar to
+
+```
+    templateUrl: "./navigation/navigation.html",
+```
+
 # initial readme
 
 ## Order System Sample Project
