@@ -1,8 +1,18 @@
-angular.module('app').controller('productDetailController', [
-    '$scope',
-    'product',
-    function($scope, product) {
-        $scope.title = 'Product Detail';
-        $scope.product = product;
-    },
-]);
+(function() {
+    'use strict';
+
+    let componentOptions = {
+        templateUrl: './productDetail/productDetail.html',
+        bindings: {
+            product: '<',
+        },
+        controller,
+    };
+
+    function controller() {
+        let ctrl = this;
+        ctrl.title = 'Product Detail';
+    }
+
+    angular.module('app').component('productDetail', componentOptions);
+})();
