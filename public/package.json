@@ -9,8 +9,8 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "angular": "~1.6.10",
-        "angular-route": "~1.6.10",
+        "angular": "~1.7.2",
+        "angular-route": "~1.7.2",
         "bootstrap": "~3.3.7",
         "jquery": "~2.2.4",
         "lodash": "~4.17.10",

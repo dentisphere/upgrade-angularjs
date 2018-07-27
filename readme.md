@@ -59,6 +59,7 @@ upgrade one version at a time, and make sure nothing broke
 npm install --save angular@1.4 angular-route@1.4
 npm install --save angular@1.5 angular-route@1.5
 npm install --save angular@1.6 angular-route@1.6
+npm install --save angular@1.7 angular-route@1.7
 ```
 
 angular@1.6 broke something about hashprefix. solution is to add some explicit configuration
@@ -73,6 +74,10 @@ appModule.config([
     }
 ]);
 ```
+
+### remarks
+
+Upgrading to 1.6 or 1.7 is not necessary. We mostly want to use angular 1.5+ so that directives can be converted to component, easing future migration to angular
 
 # initial readme
 
