@@ -19,7 +19,7 @@ angular.module("app").config([
                 controller: "productsController"
             })
             .when("/customers/:id", {
-                templateUrl: "./templates/customerDetail.html",
+                templateUrl: "./customerDetail/customerDetail.html",
                 controller: "customerDetailController",
                 resolve: {
                     customer: [

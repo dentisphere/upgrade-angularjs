@@ -12,11 +12,13 @@ Related controllers, directives, services, templates and so forth should be orga
 
 ### remarks
 
-templateUrl is relative to index.html, not to the .js file where directive is declared. Hence, url should be similar to
+`templateUrl` is relative to index.html, not to the .js file where directive is declared. Hence, url should be similar to
 
 ```
     templateUrl: "./navigation/navigation.html",
 ```
+
+Be consisent in directory names. Sam Julien uses camelcase for features, for instance `customerDetails`
 
 # initial readme
 
