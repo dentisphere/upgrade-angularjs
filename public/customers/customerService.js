@@ -1,33 +1,8 @@
-angular.module('app').service('customerService', [
-    '$http',
-    function($http) {
-        function getCustomers() {
-            return customers();
-        }
+(function() {
+    'use strict';
 
-        function getCustomer(id) {
-            return customers().filter(function(c) {
-                return c.id === id;
-            })[0];
-        }
-
-        function postCustomer(customer) {
-            return $http.post('/api/customers', customer).then(function(data) {
-                return data;
-            });
-        }
-
-        return {
-            getCustomers: getCustomers,
-            getCustomer: getCustomer,
-            postCustomer: postCustomer,
-        };
-    },
-]);
-
-//Sample data
-function customers() {
-    return [
+    //Sample data
+    const customers = [
         {
             id: 1,
             fullName: 'Jim Smith',
@@ -70,4 +45,35 @@ function customers() {
             },
         },
     ];
-}
+
+    angular.module('app').service('customerService', [
+        '$http',
+        function($http) {
+            function getCustomers() {
+                return customers;
+            }
+
+            function getCustomer(id) {
+                return customers.filter(function(c) {
+                    return c.id === id;
+                })[0];
+            }
+
+            function postCustomer(customerToSave) {
+                // return $http.post('/api/customers', customer).then(function(data) {
+                //     return data;
+                // });
+                let index = _.findIndex(customers, customer => customer.id == customerToSave.id);
+                if (index >= 0) {
+                    customers[index] = customerToSave;
+                }
+            }
+
+            return {
+                getCustomers: getCustomers,
+                getCustomer: getCustomer,
+                postCustomer: postCustomer,
+            };
+        },
+    ]);
+})();

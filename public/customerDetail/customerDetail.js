@@ -9,7 +9,7 @@
         controller,
     };
 
-    controller.$inject = ['addressFactory', 'orderService'];
+    controller.$inject = ['addressFactory', 'orderService', 'customerService'];
     function controller(addressFactory, orderService) {
         let ctrl = this;
         ctrl.title = 'Customer Detail';
@@ -22,6 +22,11 @@
             ctrl.orders.forEach(function(order) {
                 order.orderDate = moment(order.orderDate).format('MM/DD/YYYY');
             });
+        };
+
+        ctrl.updateDiscount = function(selectedDiscount) {
+            ctrl.customer.discount = selectedDiscount;
+            customerService.postCustomer(ctrl.customer);
         };
     }
 

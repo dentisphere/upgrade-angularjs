@@ -139,6 +139,10 @@ npx prettier --write **/*.js
 
 If a template includes another template with `data-ng-include` directive, $ctrl must be used in included template... maybe a good idea would be to get rid of all data-ng-include before refactoring by creating a proper component ?
 
+## add feature discount edition
+
+to illustrate one-way binding and callback to parent component
+
 # initial readme
 
 ## Order System Sample Project
