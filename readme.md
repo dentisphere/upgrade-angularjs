@@ -30,6 +30,27 @@ in folder `public`, create a package.json with command
 npm init
 ```
 
+and install following packages
+
+```
+npm install --save angular@1.3
+npm install --save angular-route@1.3
+npm install --save jquery@2.2
+npm install --save moment@2.17
+npm install --save bootstrap@3.3
+npm install --save lodash@4.17
+```
+
+update path in index.html, using corresponding .js files in node_modules, then delete unused vendor scripts in vendor directory
+
+### remarks
+
+in order to prevent upgrading minor version of packages, before installing dependencies, set `save-prefix` to `~`
+
+```
+npm config set save-prefix=~
+```
+
 # initial readme
 
 ## Order System Sample Project
