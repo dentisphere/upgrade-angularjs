@@ -8,6 +8,8 @@ import { AddressService } from './shared/addressService';
 import { customerDetailComponent } from './customerDetail/customerDetail';
 import { discountComponent } from './customerDetail/discount';
 import { customersComponent } from './customers/customers';
+import { CustomerService } from './customers/customerService';
+import { navigationComponent } from './navigation/navigation';
 
 angular
     .module('app', ['ngRoute'])
@@ -17,4 +19,6 @@ angular
     .component('customerDetail', customerDetailComponent)
     .component('discount', discountComponent)
     .component('customers', customersComponent)
+    .component('navigation', navigationComponent)
+    .service('customerService', CustomerService)
     .service('addressService', AddressService);
