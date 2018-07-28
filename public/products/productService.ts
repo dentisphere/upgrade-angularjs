@@ -4,15 +4,15 @@ export class ProductService {
     constructor(private $http: ng.IHttpService) {}
 
     getProducts(): ng.IPromise<any[]> {
-        return this.$http.get('/api/products').then((response: any) => response.data);
+        return this.$http.get<any[]>('/api/products').then(response => response.data);
     }
 
     getProduct(id: number): ng.IPromise<any> {
-        return this.$http.get(`/api/products/${id}`).then((response: any) => response.data);
+        return this.$http.get<any>(`/api/products/${id}`).then(response => response.data);
     }
 
     postProduct(product: any): ng.IPromise<any> {
-        return this.$http.post('/api/products', product).then(function(data: any) {
+        return this.$http.post<any>('/api/products', product).then(function(data) {
             return data;
         });
     }

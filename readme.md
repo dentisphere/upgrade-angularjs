@@ -337,6 +337,22 @@ when frontend calls `this.$http.get('/api/customers')`, the request is actually 
 [ctrl.customers, ctrl.orders] = await Promise.all([customerService.getCustomers(), orderService.getOrders()]);
 ```
 
+## replace `any` by proper types
+
+require @types for angular-route
+
+```
+npm install --save-dev @types/angular-route
+```
+
+### notes
+
+-   $http methods are generics, return type can be specified via <>
+
+```
+this.$http.get<any>('/api/customers').then(response => response.data);
+```
+
 # initial readme
 
 ## Order System Sample Project
