@@ -1,3 +1,4 @@
+import 'jquery';
 import * as angular from 'angular';
 import 'angular-route';
 
