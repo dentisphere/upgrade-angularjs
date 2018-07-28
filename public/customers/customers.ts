@@ -11,7 +11,7 @@ function controller(customerService: CustomerService) {
     let ctrl = this;
     ctrl.title = 'Customers';
 
-    ctrl.$onInit = function() {
-        customerService.getCustomers().then(data => (ctrl.customers = data));
+    ctrl.$onInit = async function() {
+        ctrl.customers = await customerService.getCustomers();
     };
 }

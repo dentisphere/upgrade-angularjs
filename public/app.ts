@@ -21,9 +21,11 @@ import { productDetailComponent } from './productDetail/productDetail';
 import { productsComponent } from './products/products';
 import { ProductService } from './products/productService';
 import { AuthenticationService } from './shared/authenticationService';
+import { qAsPromise } from './config.qAsPromise';
 
 angular
     .module('app', ['ngRoute'])
+    .run(qAsPromise)
     .config(hashPrefixConfig)
     .config(routeConfig)
     .component('home', homeComponent)

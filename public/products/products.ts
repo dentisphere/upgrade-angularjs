@@ -11,9 +11,7 @@ function controller(productService: ProductService) {
     let ctrl = this;
     ctrl.title = 'Products';
 
-    ctrl.$onInit = function() {
-        productService.getProducts().then(products => {
-            ctrl.products = products;
-        });
+    ctrl.$onInit = async function() {
+        ctrl.products = await productService.getProducts();
     };
 }

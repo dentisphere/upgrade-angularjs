@@ -10,7 +10,7 @@ Related controllers, directives, services, templates and so forth should be orga
 -   move files to that directory
 -   update paths in config.routes.js and index.html
 
-### remarks
+### notes
 
 `templateUrl` is relative to index.html, not to the .js file where directive is declared. Hence, url should be similar to
 
@@ -43,7 +43,7 @@ npm install --save lodash@4.17
 
 update path in index.html, using corresponding .js files in node_modules, then delete unused vendor scripts in vendor directory
 
-### remarks
+### notes
 
 in order to prevent upgrading minor version of packages, before installing dependencies, set `save-prefix` to `~`
 
@@ -75,7 +75,7 @@ appModule.config([
 ]);
 ```
 
-### remarks
+### notes
 
 Upgrading to 1.6 or 1.7 is not necessary. We mostly want to use angular 1.5+ so that directives can be converted to component, easing future migration to angular
 
@@ -125,7 +125,7 @@ bound input must be bound using $resolve service
 })
 ```
 
-### remarks
+### notes
 
 -   `templateUrl` is still relative to `index.html`
 -   since we use IIFE, I don't see the point of naming component options and controllers with a specific name by feature. I prefer more generic `componentOptions` and `controller` when naming option object and controller function
@@ -166,7 +166,7 @@ module.exports = {
 };
 ```
 
-### remarks
+### notes
 
 -   generate the bundle with command `npx webpack`
 -   clean-webpack-plugin is useful for cleaning dist folder before generation the bundle
@@ -206,7 +206,7 @@ module.exports = {
 
 rename app.js and home.js to .ts files, and fix errors by importing necessary files
 
-### remarks
+### notes
 
 -   IIFE can be safely removed from components such as home.ts, since ts modules don't pollute global namespace
 
@@ -228,7 +228,7 @@ module.exports = {
 };
 ```
 
-### remarks
+### notes
 
 because we still include bundle manually in index.html, output path can be tricky to configure in a way that works both with build prod **and** webpack-dev-server.
 
@@ -252,7 +252,7 @@ no real difficulty. At the end of this step, we should have :
 -   type 'any' added everywhere a type is needed (proper types will be added and used in next step)
 -   only one script left in index.html
 
-### remarks
+### notes
 
 @types must be installed for some vendor libraries, such as lodash
 
@@ -287,13 +287,53 @@ module.exports = {
 
 last rules is needed to handle font files referenced in css files.
 
-### remarks
+### notes
 
 loaders are applied in reverse order, `css-loader` is applied **before** `style-loader`.
 
 -   `sass-loader` loads a Sass/SCSS file and compiles it to CSS
 -   `css-loader` interprets @import and url() like import/require() and will resolve them.
 -   `style-loader` adds CSS to the DOM by injecting a <style> tag
+
+## use real REST API
+
+this step is not part of the migration process. Backend was mocked for simplicity, but now, we want to deal with a more realistic application.
+
+The key is to configure devServer with a proxy pointing at the backend server.
+
+```javascript
+module.exports = {
+    devServer: {
+        contentBase: './',
+        port: 9000,
+        proxy: {
+            '/api': 'http://localhost:9001',
+        },
+    },
+};
+```
+
+when frontend calls `this.$http.get('/api/customers')`, the request is actually sent to the proxy address (assuming server is running and listening on port 9001)
+
+### notes
+
+-   since we deal with asynchronous results ($http methods returns promises), we should use $q service for the digest cycle to take place automatically when promise is fulfilled.
+    So, at this point, we should prefer `$q.all` to `Promise.all` in a controller initialization for instance.
+-   when injecting a custom service like ProductService, declare it with its actual type, so that type inference can take place and prevents us of declare further `any` parameters.
+    For instance, since `productService.getProducts()` returns a `Promise<any[]>`, typescript compiler is able to infer that `data`
+    in `productService.getProducts().then(data => ...)` will be an array
+-   There is a trick for replacing global Promise object by angular's $q, just check config.qAsPromise.ts file and how it is run in main module.
+    There are several advantages with this technique:
+    -   works as a polyfill for older browser who don't support promises
+    -   scope is applied automatically when promise is fulfilled:
+    -   we can use async/await syntax for cleaner code
+    -   we don't need to inject $q anymore
+    -   solves first note :-)
+-   destructuring array works well when combined with `Promise.all`
+
+```javascript
+[ctrl.customers, ctrl.orders] = await Promise.all([customerService.getCustomers(), orderService.getOrders()]);
+```
 
 # initial readme
 

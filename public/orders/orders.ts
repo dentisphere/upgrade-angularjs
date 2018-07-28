@@ -8,23 +8,18 @@ export let ordersComponent = {
     controller,
 };
 
-controller.$inject = ['orderService', 'customerService', '$q'];
-function controller(orderService: OrderService, customerService: CustomerService, $q: any) {
+controller.$inject = ['orderService', 'customerService'];
+function controller(orderService: OrderService, customerService: CustomerService) {
     let ctrl = this;
     ctrl.title = 'Orders';
 
-    ctrl.$onInit = function() {
-        return $q
-            .all([customerService.getCustomers(), orderService.getOrders()])
-            .then(([customers, orders]: [any[], any[]]) => {
-                ctrl.customers = customers;
-                ctrl.orders = orders;
-                ctrl.orders.forEach(function(order: any) {
-                    var customer = _.find(ctrl.customers, function(customer) {
-                        return order.customerId === customer.id;
-                    });
-                    order.customerName = customer.fullName;
-                });
+    ctrl.$onInit = async function() {
+        [ctrl.customers, ctrl.orders] = await Promise.all([customerService.getCustomers(), orderService.getOrders()]);
+        ctrl.orders.forEach(function(order: any) {
+            var customer = _.find(ctrl.customers, function(customer) {
+                return order.customerId === customer.id;
             });
+            order.customerName = customer.fullName;
+        });
     };
 }
