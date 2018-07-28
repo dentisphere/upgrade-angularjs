@@ -433,6 +433,9 @@ However, it is important to give a path relative to **current file** (no more re
 
 `@types/node` is required to avoid compile error when require html files (either directly, or through `angular2-template-loader`)
 
+Another optimization is about CSS. Plugins `mini-css-extract-plugin` and `optimize-css-assets-webpack-plugin` can be used in production to create
+a separate CSS asset that is automatically added to _index.html_
+
 ### notes
 
 -   webpack 4 is easier to configure than previous versions, as long as we use default values. There is now a `mode` key that should be
