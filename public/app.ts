@@ -10,6 +10,7 @@ import { discountComponent } from './customerDetail/discount';
 import { customersComponent } from './customers/customers';
 import { CustomerService } from './customers/customerService';
 import { navigationComponent } from './navigation/navigation';
+import { orderDetailComponent } from './orderDetail/orderDetail';
 
 angular
     .module('app', ['ngRoute'])
@@ -20,5 +21,6 @@ angular
     .component('discount', discountComponent)
     .component('customers', customersComponent)
     .component('navigation', navigationComponent)
+    .component('orderDetail', orderDetailComponent)
     .service('customerService', CustomerService)
     .service('addressService', AddressService);
