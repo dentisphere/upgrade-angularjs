@@ -1,6 +1,10 @@
+import { CustomerService } from './customers/customerService';
+import { ProductService } from './products/productService';
+import { OrderService } from './orders/orderService';
+
 routeConfig.$inject = ['$routeProvider'];
 
-export function routeConfig($routeProvider: any) {
+export function routeConfig($routeProvider: ng.route.IRouteProvider) {
     $routeProvider
         .when('/', {
             template: '<home></home>',
@@ -20,7 +24,7 @@ export function routeConfig($routeProvider: any) {
                 customer: [
                     '$route',
                     'customerService',
-                    function($route: any, customerService: any) {
+                    function($route: ng.route.IRouteService, customerService: CustomerService) {
                         var id = parseInt($route.current.params.id);
                         return customerService.getCustomer(id);
                     },
@@ -33,7 +37,7 @@ export function routeConfig($routeProvider: any) {
                 order: [
                     '$route',
                     'orderService',
-                    function($route: any, orderService: any) {
+                    function($route: ng.route.IRouteService, orderService: OrderService) {
                         var id = parseInt($route.current.params.id);
                         return orderService.getOrder(id);
                     },
@@ -46,7 +50,7 @@ export function routeConfig($routeProvider: any) {
                 product: [
                     '$route',
                     'productService',
-                    function($route: any, productService: any) {
+                    function($route: ng.route.IRouteService, productService: ProductService) {
                         var id = parseInt($route.current.params.id);
                         return productService.getProduct(id);
                     },
