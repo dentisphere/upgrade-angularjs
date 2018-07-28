@@ -6,13 +6,13 @@ Related controllers, directives, services, templates and so forth should be orga
 
 ### instructions
 
--   create directory for one feature
--   move files to that directory
--   update paths in config.routes.js and index.html
+-   create directory for each feature
+-   move files to this new directory
+-   update paths in `config.routes.js` and `index.html`
 
 ### notes
 
-`templateUrl` is relative to index.html, not to the .js file where directive is declared. Hence, url should be similar to
+`templateUrl` is relative to `index.html`, not to the .js file where directive is declared. Hence, url should be similar to
 
 ```
     templateUrl: "./navigation/navigation.html",
@@ -24,7 +24,7 @@ Use a `shared` folder for services and factories that can be used in several ele
 
 ## move dependencies to npm
 
-in folder `public`, create a package.json with command
+in folder `public`, create a `package.json` with command
 
 ```bash
 npm init
@@ -62,7 +62,7 @@ npm install --save angular@1.6 angular-route@1.6
 npm install --save angular@1.7 angular-route@1.7
 ```
 
-angular@1.6 broke something about hashprefix. solution is to add some explicit configuration
+angular@1.6 broke something about _hashprefix_. solution is to add some explicit configuration
 
 solution is [here](https://stackoverflow.com/questions/41211875/angularjs-1-6-0-latest-now-routes-not-working)
 
@@ -77,7 +77,7 @@ appModule.config([
 
 ### notes
 
-Upgrading to 1.6 or 1.7 is not necessary. We mostly want to use angular 1.5+ so that directives can be converted to component, easing future migration to angular
+Upgrading to 1.6 or 1.7 is not necessary. We mostly want to use angular 1.5+ so that directives can be converted to components, easing future migration to angular
 
 ## converting controllers to components
 
@@ -85,13 +85,13 @@ steps:
 
 -   include current code in IIFE + `'use strict'`
 -   create option object for component with fields
-    -   templateUrl
-    -   bindings
-    -   controller
+    -   `templateUrl`
+    -   `bindings` (empty object if no binding)
+    -   `controller`
 -   move controller function out of registration in module
--   use $inject to avoid minification problems with dependencies and remove $scope from list of dependencies
--   use a `ctrl` or `vm` variable to avoid closure problemes
--   use $onInit for component initialisation, for instance to insure bindings have been made
+-   use `$inject` to avoid minification problems with dependencies and remove `$scope` from list of dependencies
+-   use a `ctrl` or `vm` variable to avoid closure problems
+-   use `$onInit` for component initialisation, for instance to insure bindings have been made
 -   register component in module
 -   update template by adding `$ctrl.` to scope variables
 -   update route
@@ -107,7 +107,7 @@ ctrl.$onInit = function() {
 };
 ```
 
-bound input must be bound using $resolve service
+input must be bound using $resolve service
 
 ```javascript
 .when('/customers/:id', {
@@ -128,16 +128,16 @@ bound input must be bound using $resolve service
 ### notes
 
 -   `templateUrl` is still relative to `index.html`
--   since we use IIFE, I don't see the point of naming component options and controllers with a specific name by feature. I prefer more generic `componentOptions` and `controller` when naming option object and controller function
+-   since we use IIFE, I don't see the point of naming component options and controllers with a specific name by feature. I prefer more generic `componentOptions` and `controller` when naming option object and controller function. **Edit:** it turns out that component must have a unique name, as it will be exported later, when component is registered in `app.ts`
 
-to run prettier on all files :
+-   to run prettier on all files (**edit : should be done sooner**):
 
 ```
 npm install --save-dev --save-exact prettier
 npx prettier --write **/*.js
 ```
 
-If a template includes another template with `data-ng-include` directive, $ctrl must be used in included template... maybe a good idea would be to get rid of all data-ng-include before refactoring by creating a proper component ?
+If a template includes another template with `data-ng-include` directive, `$ctrl` must be used in included template... maybe a good idea would be to get rid of all `data-ng-include` before refactoring by creating a dedicated component ?
 
 ## add feature discount edition
 
@@ -145,7 +145,7 @@ to illustrate one-way binding and callback to parent component
 
 ## integrate webpack 4
 
-In this step, we use webpack to create a bundle from an entry point (app.js). The bundle result (public/dist/bundle.js) is included manually in index.html.
+In this step, we use webpack to create a bundle from an entry point (`app.js`). The bundle result (`public/dist/bundle.js`) is included manually in `index.html`.
 We just want to initiate the bundle process, as a prerequisite for typescript integration
 
 ```
@@ -169,8 +169,8 @@ module.exports = {
 ### notes
 
 -   generate the bundle with command `npx webpack`
--   clean-webpack-plugin is useful for cleaning dist folder before generation the bundle
--   by default, output is created in dist/ (relative path to config file)
+-   _clean-webpack-plugin_ is useful for cleaning _dist_ folder before generation the bundle
+-   by default, output is created in _dist/_ (relative path to config file)
 -   at the moment, application still need to be served statically (`static-server`)
 
 ## integrate typescript
@@ -204,11 +204,11 @@ module.exports = {
 };
 ```
 
-rename app.js and home.js to .ts files, and fix errors by importing necessary files
+rename _app.js_ and _home.js_ to _.ts_ files, and fix errors by importing necessary files
 
 ### notes
 
--   IIFE can be safely removed from components such as home.ts, since ts modules don't pollute global namespace
+-   IIFE can be safely removed from components such as _home.ts_, since ts modules don't pollute global namespace
 
 ## add webpack-dev-server
 
@@ -230,7 +230,7 @@ module.exports = {
 
 ### notes
 
-because we still include bundle manually in index.html, output path can be tricky to configure in a way that works both with build prod **and** webpack-dev-server.
+-   because we still include bundle manually in index.html, output path can be tricky to configure in a way that works both with build prod **and** webpack-dev-server.
 
 solution is
 
@@ -243,18 +243,20 @@ module.exports = {
 };
 ```
 
+-   when webpack config change, webpack-dev-server must be restarted
+
 ## convert js files to ts files
 
 no real difficulty. At the end of this step, we should have :
 
 -   all angular components and services registration are in app.ts
--   no more js file
--   type 'any' added everywhere a type is needed (proper types will be added and used in next step)
--   only one script left in index.html
+-   no more .js file
+-   type `any` added everywhere a type is needed (proper types will be added and used in next step)
+-   only one script left in _index.html_
 
 ### notes
 
-@types must be installed for some vendor libraries, such as lodash
+`@types` must be installed for some vendor libraries, such as _lodash_
 
 ## include css and sass in webpack
 
@@ -285,7 +287,7 @@ module.exports = {
 };
 ```
 
-last rules is needed to handle font files referenced in css files.
+last rules is needed to handle font files referenced in CSS files.
 
 ### notes
 
@@ -317,20 +319,21 @@ when frontend calls `this.$http.get('/api/customers')`, the request is actually 
 
 ### notes
 
--   since we deal with asynchronous results ($http methods returns promises), we should use $q service for the digest cycle to take place automatically when promise is fulfilled.
-    So, at this point, we should prefer `$q.all` to `Promise.all` in a controller initialization for instance.
--   when injecting a custom service like ProductService, declare it with its actual type, so that type inference can take place and prevents us of declare further `any` parameters.
+-   since we deal with asynchronous results ($http methods returns promises), we should use `$q` service for the digest cycle to take place automatically when promise is fulfilled.
+    So, at this point, we should prefer `$q.all` to `Promise.all` in a controller initialization for instance (**edit**: there is a better solution, see below).
+-   when injecting a custom service like `ProductService`, declare it with its actual type, so that type inference can take place and prevents us of declaring further `any` parameters.
     For instance, since `productService.getProducts()` returns a `Promise<any[]>`, typescript compiler is able to infer that `data`
     in `productService.getProducts().then(data => ...)` will be an array
--   There is a trick for replacing global Promise object by angular's $q, just check config.qAsPromise.ts file and how it is run in main module.
-    There are several advantages with this technique:
-    -   works as a polyfill for older browser who don't support promises
-    -   scope is applied automatically when promise is fulfilled:
-    -   we can use async/await syntax for cleaner code
-    -   we don't need to inject $q anymore
-    -   solves first note :-)
+-   There is a trick for replacing global `Promise` object by angular's $q, just check _config.qAsPromise.ts_ file and how it is run in main module.
+    There are several advantages coming with this technique:
+    -   works as a polyfill for older browsers who don't support promises
+    -   scope is applied automatically when promise is fulfilled (automatic UI refresh)
+    -   we can use `async`/`await` syntax for cleaner code
+    -   we don't need to inject `$q` anymore in application
+    -   solves first note of this list :-)
 -   destructuring array works well when combined with `Promise.all`
--   $http service type is `ng.IHttpService`. This implies some change in our code as the service methods return `ng.IPromise` instead of regular `Promise`
+-   `$http` service type is `ng.IHttpService`. This implies some change in our code as the service methods return `ng.IPromise` instead of regular `Promise`. **edit**: better way is to make
+    the method calling `$http` service `async`.
 -   More generally, all angular JS services `$xxx` have type `ng.IxxxService`.
 
 ```javascript
