@@ -243,6 +243,19 @@ module.exports = {
 };
 ```
 
+## convert js files to ts files
+
+no real difficulty. At the end of this step, we should have :
+
+-   all angular components and services registration are in app.ts
+-   no more js file
+-   type 'any' added everywhere a type is needed (proper types will be added and used in next step)
+-   only one script left in index.html
+
+### remarks
+
+@types must be installed for some vendor libraries, such as lodash
+
 # initial readme
 
 ## Order System Sample Project
