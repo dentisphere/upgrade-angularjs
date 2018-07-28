@@ -18,9 +18,11 @@ function controller(addressService: any, orderService: any, customerService: Cus
 
     ctrl.$onInit = function() {
         ctrl.address = addressService.getFullAddress(ctrl.customer);
-        ctrl.orders = orderService.getOrdersByCustomer(ctrl.customer.id);
-        ctrl.orders.forEach(function(order: any) {
-            order.orderDate = moment(order.orderDate).format('MM/DD/YYYY');
+        orderService.getOrdersByCustomer(ctrl.customer.id).then((orders: any) => {
+            ctrl.orders = orders;
+            ctrl.orders.forEach(function(order: any) {
+                order.orderDate = moment(order.orderDate).format('MM/DD/YYYY');
+            });
         });
     };
 
