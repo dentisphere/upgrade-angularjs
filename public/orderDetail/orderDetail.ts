@@ -1,4 +1,6 @@
 import * as _ from 'lodash';
+import { ProductService } from '../products/productService';
+import { CustomerService } from '../customers/customerService';
 
 export let orderDetailComponent = {
     templateUrl: './orderDetail/orderDetail.html',
@@ -9,7 +11,7 @@ export let orderDetailComponent = {
 };
 
 controller.$inject = ['productService', 'customerService', '$q'];
-function controller(productService: any, customerService: any, $q: any) {
+function controller(productService: ProductService, customerService: CustomerService, $q: any) {
     let ctrl = this;
     ctrl.title = 'Order Detail';
 

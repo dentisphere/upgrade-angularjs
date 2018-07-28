@@ -1,5 +1,7 @@
 import * as moment from 'moment';
 import { CustomerService } from '../customers/customerService';
+import { AddressService } from '../shared/addressService';
+import { OrderService } from '../orders/orderService';
 
 export let customerDetailComponent = {
     templateUrl: './customerDetail/customerDetail.html',
@@ -10,7 +12,7 @@ export let customerDetailComponent = {
 };
 
 controller.$inject = ['addressService', 'orderService', 'customerService'];
-function controller(addressService: any, orderService: any, customerService: CustomerService) {
+function controller(addressService: AddressService, orderService: OrderService, customerService: CustomerService) {
     let ctrl = this;
     ctrl.title = 'Customer Detail';
     ctrl.discountTemplate = '../customerDetail/discount.html';
@@ -18,9 +20,9 @@ function controller(addressService: any, orderService: any, customerService: Cus
 
     ctrl.$onInit = function() {
         ctrl.address = addressService.getFullAddress(ctrl.customer);
-        orderService.getOrdersByCustomer(ctrl.customer.id).then((orders: any) => {
+        orderService.getOrdersByCustomer(ctrl.customer.id).then(orders => {
             ctrl.orders = orders;
-            ctrl.orders.forEach(function(order: any) {
+            orders.forEach(function(order) {
                 order.orderDate = moment(order.orderDate).format('MM/DD/YYYY');
             });
         });

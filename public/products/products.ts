@@ -1,3 +1,5 @@
+import { ProductService } from './productService';
+
 export let productsComponent = {
     templateUrl: './products/products.html',
     bindings: {},
@@ -5,12 +7,12 @@ export let productsComponent = {
 };
 
 controller.$inject = ['productService'];
-function controller(productService: any) {
+function controller(productService: ProductService) {
     let ctrl = this;
     ctrl.title = 'Products';
 
     ctrl.$onInit = function() {
-        productService.getProducts().then((products: any[]) => {
+        productService.getProducts().then(products => {
             ctrl.products = products;
         });
     };

@@ -1,3 +1,5 @@
+import { CustomerService } from './customerService';
+
 export let customersComponent = {
     templateUrl: './customers/customers.html',
     bindings: {},
@@ -5,11 +7,11 @@ export let customersComponent = {
 };
 
 controller.$inject = ['customerService'];
-function controller(customerService: any) {
+function controller(customerService: CustomerService) {
     let ctrl = this;
     ctrl.title = 'Customers';
 
     ctrl.$onInit = function() {
-        customerService.getCustomers().then((data: any) => (ctrl.customers = data));
+        customerService.getCustomers().then(data => (ctrl.customers = data));
     };
 }
