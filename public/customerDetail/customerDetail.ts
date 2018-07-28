@@ -1,4 +1,5 @@
 import * as moment from 'moment';
+import { CustomerService } from '../customers/customerService';
 
 export let customerDetailComponent = {
     templateUrl: './customerDetail/customerDetail.html',
@@ -9,7 +10,7 @@ export let customerDetailComponent = {
 };
 
 controller.$inject = ['addressService', 'orderService', 'customerService'];
-function controller(addressService: any, orderService: any, customerService: any) {
+function controller(addressService: any, orderService: any, customerService: CustomerService) {
     let ctrl = this;
     ctrl.title = 'Customer Detail';
     ctrl.discountTemplate = '../customerDetail/discount.html';
@@ -25,6 +26,6 @@ function controller(addressService: any, orderService: any, customerService: any
 
     ctrl.updateDiscount = function(selectedDiscount: any) {
         ctrl.customer.discount = selectedDiscount;
-        customerService.postCustomer(ctrl.customer);
+        return customerService.postCustomer(ctrl.customer);
     };
 }

@@ -10,6 +10,6 @@ function controller(customerService: any) {
     ctrl.title = 'Customers';
 
     ctrl.$onInit = function() {
-        ctrl.customers = customerService.getCustomers();
+        customerService.getCustomers().then((data: any) => (ctrl.customers = data));
     };
 }
