@@ -447,6 +447,11 @@ a separate CSS asset that is automatically added to _index.html_
 -   _dist_ folder is now outside the _public_ folder where webpacks resides. By default, the `CleanWebpackPlugin` does not allow to clean a folder
     outside the project, we must use a dedicated option to bypass this limitation.
 
+### move all source files to _src_ folder
+
+Requires some tuning in webpack configuration files. No difficulty.
+File structure is now closer to an angular 2+ project structure
+
 # initial readme
 
 ## Order System Sample Project
