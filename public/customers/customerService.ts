@@ -3,6 +3,8 @@ import * as _ from 'lodash';
 export class CustomerService {
     public static $inject = ['$http'];
 
+    constructor(private $http: any) {}
+
     getCustomers() {
         return customers;
     }
