@@ -15,6 +15,7 @@ import { ordersComponent } from './orders/orders';
 import { OrderService } from './orders/orderService';
 import { productDetailComponent } from './productDetail/productDetail';
 import { productsComponent } from './products/products';
+import { ProductService } from './products/productService';
 
 angular
     .module('app', ['ngRoute'])
@@ -31,4 +32,5 @@ angular
     .component('products', productsComponent)
     .service('orderService', OrderService)
     .service('customerService', CustomerService)
+    .service('productService', ProductService)
     .service('addressService', AddressService);
