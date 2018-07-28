@@ -330,6 +330,8 @@ when frontend calls `this.$http.get('/api/customers')`, the request is actually 
     -   we don't need to inject $q anymore
     -   solves first note :-)
 -   destructuring array works well when combined with `Promise.all`
+-   $http service type is `ng.IHttpService`. This implies some change in our code as the service methods return `ng.IPromise` instead of regular `Promise`
+-   More generally, all angular JS services `$xxx` have type `ng.IxxxService`.
 
 ```javascript
 [ctrl.customers, ctrl.orders] = await Promise.all([customerService.getCustomers(), orderService.getOrders()]);
