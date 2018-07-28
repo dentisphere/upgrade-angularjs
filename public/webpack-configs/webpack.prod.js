@@ -15,4 +15,9 @@ module.exports = {
             allowExternal: true,
         }),
     ],
+    optimization: {
+        splitChunks: {
+            chunks: 'all',
+        },
+    },
 };
