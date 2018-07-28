@@ -2,14 +2,11 @@ import * as angular from 'angular';
 import 'angular-route';
 
 import { homeComponent } from './home/home';
+import { hashPrefixConfig } from './config.hashprefix';
+import { routeConfig } from './config.routes';
 
-angular.module('app', ['ngRoute']);
-
-angular.module('app').config([
-    '$locationProvider',
-    function($locationProvider: any) {
-        $locationProvider.hashPrefix('');
-    },
-]);
-
-angular.module('app').component('home', homeComponent);
+angular
+    .module('app', ['ngRoute'])
+    .config(hashPrefixConfig)
+    .config(routeConfig)
+    .component('home', homeComponent);
