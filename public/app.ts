@@ -14,6 +14,7 @@ import { orderDetailComponent } from './orderDetail/orderDetail';
 import { ordersComponent } from './orders/orders';
 import { OrderService } from './orders/orderService';
 import { productDetailComponent } from './productDetail/productDetail';
+import { productsComponent } from './products/products';
 
 angular
     .module('app', ['ngRoute'])
@@ -27,6 +28,7 @@ angular
     .component('orderDetail', orderDetailComponent)
     .component('orders', ordersComponent)
     .component('productDetail', productDetailComponent)
+    .component('products', productsComponent)
     .service('orderService', OrderService)
     .service('customerService', CustomerService)
     .service('addressService', AddressService);
