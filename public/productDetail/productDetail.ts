@@ -1,5 +1,5 @@
 export let productDetailComponent: ng.IComponentOptions = {
-    templateUrl: './productDetail/productDetail.html',
+    templateUrl: './productDetail.html',
     bindings: {
         product: '<',
     },

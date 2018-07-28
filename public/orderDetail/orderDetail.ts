@@ -3,7 +3,7 @@ import { ProductService } from '../products/productService';
 import { CustomerService } from '../customers/customerService';
 
 export let orderDetailComponent: ng.IComponentOptions = {
-    templateUrl: './orderDetail/orderDetail.html',
+    templateUrl: './orderDetail.html',
     bindings: {
         order: '<',
     },

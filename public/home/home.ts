@@ -1,5 +1,5 @@
 export let homeComponent: ng.IComponentOptions = {
-    templateUrl: './home/home.html',
+    templateUrl: './home.html',
     bindings: {},
     controller,
 };

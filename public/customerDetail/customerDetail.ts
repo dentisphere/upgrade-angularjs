@@ -4,7 +4,7 @@ import { AddressService } from '../shared/addressService';
 import { OrderService } from '../orders/orderService';
 
 export let customerDetailComponent: ng.IComponentOptions = {
-    templateUrl: './customerDetail/customerDetail.html',
+    templateUrl: './customerDetail.html',
     bindings: {
         customer: '<',
     },

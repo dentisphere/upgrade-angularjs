@@ -1,7 +1,7 @@
 import { CustomerService } from './customerService';
 
 export let customersComponent: ng.IComponentOptions = {
-    templateUrl: './customers/customers.html',
+    templateUrl: './customers.html',
     bindings: {},
     controller,
 };

@@ -1,7 +1,7 @@
 import * as _ from 'lodash';
 
 export let discountComponent: ng.IComponentOptions = {
-    templateUrl: './customerDetail/discount.html',
+    templateUrl: './discount.html',
     bindings: {
         customerDiscount: '<',
         update: '&',

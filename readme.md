@@ -356,6 +356,94 @@ npm install --save-dev @types/angular-route
 this.$http.get<any>('/api/customers').then(response => response.data);
 ```
 
+## split webpack configuration for develoment and production
+
+We want to distinguish configuration for development and production. Still, both configurations may share some configuration option. Thus,
+we use four configuration file
+
+-   _webpack-configs/webpack.common.js_ : shared configuration
+-   _webpack-configs/webpack.dev.js_ : specific for development
+-   _webpack-configs/webpack.prod.js_ : specific for production
+-   _webpack.config.js_ : merges common configuration with dev or prod configuration according enviornement variable
+
+To merge configuration files, we use `webpack-merge`, a simple function that creates a single configuration object from several separate
+configuration objects.
+
+```
+npm install --save-dev webpack-merge
+```
+
+_webpack.config.js_ just merges two configurations. Notice how the configuration file now exports a **function** taking `env` argument and returning
+a configuration object. This function is passed environment variables, so we can take specific actions according to some of these variables.
+
+```javascript
+const webpackMerge = require('webpack-merge');
+const commonConfig = require('./webpack-configs/webpack.common');
+
+module.exports = env => {
+    const envConfig = require(`./webpack-configs/webpack.${env.env}.js`);
+    return webpackMerge.smart(commonConfig, envConfig);
+};
+```
+
+Notice how we use javascript template string interpolation to require the desired config file according to `env.env` value.
+
+In order to pass the appropriate variable, we can add an argument in npm scripts we use. In _package.json_ :
+
+```json
+{
+    "scripts": {
+        "build:prod": "npm run build -- --env.env=prod",
+        "build": "webpack --bail --progress",
+        "dev": "webpack-dev-server --env.env=dev"
+    }
+}
+```
+
+```bash
+npm run build:prod
+npm run dev
+```
+
+to configure properly both environments, several things must be done. We need several dependencies :
+
+```
+npm install --save-dev angular2-template-loader @types/node
+npm install --save-dev html-webpack-plugin raw-loader
+```
+
+`html-webpack-plugin` adds our _index.html_ to the dist folder and adds automatically the `<script>` element to load our _bundle.js_.
+This is handy as bundle name can be configured to add some _hash_ value, that changes each time the bundle changes. Thus, we no longer
+need to include manually our bundle in _index.html_.
+
+`raw-loader` allow to import files as string. This allow to require html files for a template, for instance.
+
+because AOT techniques (see later) require to use templateUrl, `angular2-template-loader`
+will inline html and styles in angular components. That way, we can keep `templateUrl' in declarations such as :
+
+```javascript
+export let customersComponent: ng.IComponentOptions = {
+    templateUrl: './customers.html',
+    bindings: {},
+    controller,
+};
+```
+
+However, it is important to give a path relative to **current file** (no more relative to index.html)
+
+`@types/node` is required to avoid compile error when require html files (either directly, or through `angular2-template-loader`)
+
+### notes
+
+-   webpack 4 is easier to configure than previous versions, as long as we use default values. There is now a `mode` key that should be
+    specified in configuration, with smart default values.
+-   we use `webpackMerge.smart(...)` to anticipate next steps. webpack-merge.smart is aware of the shape of a webpack configuration
+    and allows you to update only the rule you want. It was not necessary at this point to use the `smart` function, we could as well
+    use `webpackMerge(...)`.
+-   server is configured to serve static files from `../dist/` (path is relative to _server.js_). This is the reason why _index.html_ must be part of the distribution.
+-   _dist_ folder is now outside the _public_ folder where webpacks resides. By default, the `CleanWebpackPlugin` does not allow to clean a folder
+    outside the project, we must use a dedicated option to bypass this limitation.
+
 # initial readme
 
 ## Order System Sample Project
