@@ -11,6 +11,7 @@ import { customersComponent } from './customers/customers';
 import { CustomerService } from './customers/customerService';
 import { navigationComponent } from './navigation/navigation';
 import { orderDetailComponent } from './orderDetail/orderDetail';
+import { ordersComponent } from './orders/orders';
 
 angular
     .module('app', ['ngRoute'])
@@ -22,5 +23,6 @@ angular
     .component('customers', customersComponent)
     .component('navigation', navigationComponent)
     .component('orderDetail', orderDetailComponent)
+    .component('orders', ordersComponent)
     .service('customerService', CustomerService)
     .service('addressService', AddressService);
