@@ -2,7 +2,7 @@ import * as _ from 'lodash';
 import { ProductService } from '../products/productService';
 import { CustomerService } from '../customers/customerService';
 
-export let orderDetailComponent = {
+export let orderDetailComponent: ng.IComponentOptions = {
     templateUrl: './orderDetail/orderDetail.html',
     bindings: {
         order: '<',

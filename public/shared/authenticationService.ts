@@ -2,7 +2,7 @@
 //it's just here to illustrate shared services.
 
 export class AuthenticationService {
-    authenticate() {
+    authenticate(): boolean {
         return true;
     }
 }

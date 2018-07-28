@@ -1,4 +1,4 @@
-export let homeComponent = {
+export let homeComponent: ng.IComponentOptions = {
     templateUrl: './home/home.html',
     bindings: {},
     controller,

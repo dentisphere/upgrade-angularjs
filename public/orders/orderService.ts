@@ -5,19 +5,23 @@ export class OrderService {
 
     constructor(private $http: ng.IHttpService) {}
 
-    getOrders(): ng.IPromise<any[]> {
-        return this.$http.get<any[]>('/api/orders').then(response => response.data);
+    async getOrders(): Promise<any[]> {
+        const response = await this.$http.get<any[]>('/api/orders');
+        return response.data;
     }
 
-    getOrder(id: number): ng.IPromise<any> {
-        return this.$http.get<any>(`/api/orders/${id}`).then(response => response.data);
+    async getOrder(id: number): Promise<any> {
+        const response = await this.$http.get<any>(`/api/orders/${id}`);
+        return response.data;
     }
 
-    getOrdersByCustomer(customerId: number): ng.IPromise<any[]> {
-        return this.$http.get<any[]>(`/api/customers/${customerId}/orders`).then(response => response.data);
+    async getOrdersByCustomer(customerId: number): Promise<any[]> {
+        const response = await this.$http.get<any[]>(`/api/customers/${customerId}/orders`);
+        return response.data;
     }
 
-    postOrder(order: any): ng.IPromise<any> {
-        return this.$http.post<any>('/api/orders', order);
+    async postOrder(order: any): Promise<any> {
+        const response = await this.$http.post<any>('/api/orders', order);
+        return response.data;
     }
 }

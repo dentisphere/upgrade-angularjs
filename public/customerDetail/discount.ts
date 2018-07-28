@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 
-export let discountComponent = {
+export let discountComponent: ng.IComponentOptions = {
     templateUrl: './customerDetail/discount.html',
     bindings: {
         customerDiscount: '<',
@@ -9,7 +9,7 @@ export let discountComponent = {
     controller,
 };
 
-function controller() {
+function controller(): void {
     let ctrl = this;
     ctrl.edited = false;
     ctrl.selectedDiscount = null;
@@ -31,18 +31,18 @@ function controller() {
         },
     ];
 
-    ctrl.$onInit = function() {
+    ctrl.$onInit = function(): void {
         ctrl.selectedDiscount = _.find(
             ctrl.discounts,
             (discount: any) => discount.discountId === ctrl.customerDiscount.discountId,
         );
     };
 
-    ctrl.edit = function() {
+    ctrl.edit = function(): void {
         ctrl.isEdited = true;
     };
 
-    ctrl.save = function() {
+    ctrl.save = function(): void {
         ctrl.isEdited = false;
         ctrl.update({ selectedDiscount: ctrl.selectedDiscount });
     };

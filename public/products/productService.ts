@@ -3,17 +3,18 @@ export class ProductService {
 
     constructor(private $http: ng.IHttpService) {}
 
-    getProducts(): ng.IPromise<any[]> {
-        return this.$http.get<any[]>('/api/products').then(response => response.data);
+    async getProducts(): Promise<any[]> {
+        const response = await this.$http.get<any[]>('/api/products');
+        return response.data;
     }
 
-    getProduct(id: number): ng.IPromise<any> {
-        return this.$http.get<any>(`/api/products/${id}`).then(response => response.data);
+    async getProduct(id: number): Promise<any> {
+        const response = await this.$http.get<any>(`/api/products/${id}`);
+        return response.data;
     }
 
-    postProduct(product: any): ng.IPromise<any> {
-        return this.$http.post<any>('/api/products', product).then(function(data) {
-            return data;
-        });
+    async postProduct(product: any): Promise<any> {
+        const response = await this.$http.post<any>('/api/products', product);
+        return response.data;
     }
 }

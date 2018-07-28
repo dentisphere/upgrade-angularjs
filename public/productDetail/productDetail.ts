@@ -1,4 +1,4 @@
-export let productDetailComponent = {
+export let productDetailComponent: ng.IComponentOptions = {
     templateUrl: './productDetail/productDetail.html',
     bindings: {
         product: '<',
@@ -6,7 +6,7 @@ export let productDetailComponent = {
     controller,
 };
 
-function controller() {
+function controller(): void {
     let ctrl = this;
     ctrl.title = 'Product Detail';
 }

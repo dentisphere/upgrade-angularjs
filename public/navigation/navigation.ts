@@ -1,4 +1,4 @@
-export let navigationComponent = {
+export let navigationComponent: ng.IComponentOptions = {
     templateUrl: './navigation/navigation.html',
     bindings: {},
     controller,
