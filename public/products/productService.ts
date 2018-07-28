@@ -3,49 +3,17 @@ export class ProductService {
 
     constructor(private $http: any) {}
 
-    getProducts() {
-        return products();
+    getProducts(): Promise<any[]> {
+        return this.$http.get('/api/products').then((response: any) => response.data);
     }
 
-    getProduct(id: number) {
-        return products().filter(function(p) {
-            return p.id === id;
-        })[0];
+    getProduct(id: number): Promise<any> {
+        return this.$http.get(`/api/products/${id}`).then((response: any) => response.data);
     }
 
-    postProduct(product: any) {
+    postProduct(product: any): Promise<any> {
         return this.$http.post('/api/products', product).then(function(data: any) {
             return data;
         });
     }
-}
-
-//Sample data
-function products() {
-    return [
-        {
-            id: 1,
-            name: 'Amazing Widget',
-            color: 'Red',
-            price: 2.5,
-        },
-        {
-            id: 2,
-            name: 'Incredible Widget',
-            color: 'Blue',
-            price: 2.5,
-        },
-        {
-            id: 3,
-            name: 'Fantastic Widget',
-            color: 'Yellow',
-            price: 2.5,
-        },
-        {
-            id: 4,
-            name: 'Collectible Widget Tote Bag',
-            color: 'Sand',
-            price: 10,
-        },
-    ];
 }

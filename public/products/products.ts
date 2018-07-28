@@ -10,6 +10,8 @@ function controller(productService: any) {
     ctrl.title = 'Products';
 
     ctrl.$onInit = function() {
-        ctrl.products = productService.getProducts();
+        productService.getProducts().then((products: any[]) => {
+            ctrl.products = products;
+        });
     };
 }
