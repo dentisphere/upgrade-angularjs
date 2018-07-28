@@ -256,6 +256,40 @@ no real difficulty. At the end of this step, we should have :
 
 @types must be installed for some vendor libraries, such as lodash
 
+## include css and sass in webpack
+
+```
+npm install --save-dev css-loader sass-loader style-loader file-loader
+```
+
+add rules to webpack config
+
+```javascript
+module.exports = {
+    module: {
+        rules: [
+            {
+                test: /\.css?$/,
+                use: ['style-loader', 'css-loader'],
+            },
+            {
+                test: /\.(woff|woff2|eot|ttf|svg)$/,
+                use: 'file-loader',
+            },
+        ],
+    },
+};
+```
+
+second rules is needed to handle font files referenced in css files.
+
+### remarks
+
+loaders are applied in reverse order, `css-loader` is applies prior to `style-loader`.
+
+-   `css-loader` interprets @import and url() like import/require() and will resolve them.
+-   `style-loader` adds CSS to the DOM by injecting a <style> tag
+
 # initial readme
 
 ## Order System Sample Project

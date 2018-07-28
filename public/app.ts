@@ -1,3 +1,5 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 import 'jquery';
 import * as angular from 'angular';
 import 'angular-route';
