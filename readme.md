@@ -259,7 +259,7 @@ no real difficulty. At the end of this step, we should have :
 ## include css and sass in webpack
 
 ```
-npm install --save-dev css-loader sass-loader style-loader file-loader
+npm install --save-dev css-loader sass-loader style-loader file-loader node-sass
 ```
 
 add rules to webpack config
@@ -268,6 +268,10 @@ add rules to webpack config
 module.exports = {
     module: {
         rules: [
+            {
+                test: /\.scss?$/,
+                use: ['style-loader', 'css-loader', 'sass-loader'],
+            },
             {
                 test: /\.css?$/,
                 use: ['style-loader', 'css-loader'],
@@ -281,12 +285,13 @@ module.exports = {
 };
 ```
 
-second rules is needed to handle font files referenced in css files.
+last rules is needed to handle font files referenced in css files.
 
 ### remarks
 
-loaders are applied in reverse order, `css-loader` is applies prior to `style-loader`.
+loaders are applied in reverse order, `css-loader` is applied **before** `style-loader`.
 
+-   `sass-loader` loads a Sass/SCSS file and compiles it to CSS
 -   `css-loader` interprets @import and url() like import/require() and will resolve them.
 -   `style-loader` adds CSS to the DOM by injecting a <style> tag
 
