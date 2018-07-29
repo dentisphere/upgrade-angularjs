@@ -1,18 +1,11 @@
+import { CustomerService } from './customerService';
+
 describe('Customer Service', () => {
     let $httpMock, customerService;
 
     beforeEach(function() {
-        angular.mock.module('app');
-
         $httpMock = sinon.stub({ get: angular.noop, post: angular.noop });
-
-        angular.mock.module(function($provide) {
-            $provide.value('$http', $httpMock);
-        });
-
-        angular.mock.inject(function($injector) {
-            customerService = $injector.get('customerService');
-        });
+        customerService = new CustomerService($httpMock);
     });
 
     describe('getCustomers()', () => {
