@@ -16,7 +16,7 @@
         "bootstrap": "~3.3.7",
         "jquery": "~2.2.4",
         "lodash": "~4.17.10",
-        "moment": "~2.17.1"
+        "moment": "~2.22.2"
     },
     "devDependencies": {
         "@types/angular": "~1.6.49",
@@ -54,7 +54,7 @@
         "sinon-chai": "~3.2.0",
         "style-loader": "~0.21.0",
         "ts-loader": "~4.4.2",
-        "typescript": "~2.7.2",
+        "typescript": "~2.9.2",
         "webpack": "~4.16.3",
         "webpack-cli": "~3.1.0",
         "webpack-dev-server": "~3.1.5",
