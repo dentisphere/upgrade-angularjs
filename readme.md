@@ -452,6 +452,69 @@ a separate CSS asset that is automatically added to _index.html_
 Requires some tuning in webpack configuration files. No difficulty.
 File structure is now closer to an angular 2+ project structure
 
+## configure tests
+
+interesting ressource https://developers.google.com/web/updates/2017/06/headless-karma-mocha-chai
+
+There are some differences compared to original course because I wanted to use mocha/chai instead of jasmine. I also wanted to use
+_ChromeHeadless_ as browser used for tests.
+
+Main dependencies added to the project are :
+
+-   `@types/angular-mocks`
+-   `@types/chai`
+-   `@types/mocha`
+-   `@types/webpack`
+-   `angular-mocks`
+-   `chai`
+-   `karma`
+-   `karma-chai`
+-   `karma-chrome-launcher`
+-   `karma-mocha`
+-   `karma-mocha-reporter`
+-   `karma-webpack`
+-   `mocha`
+
+karma config file can be created with command
+
+```bash
+npx karma init
+```
+
+to avoid test framework to create a bundle for each test, we configure a **unique** test, `webpack.tests.js` :
+
+```javascript
+import 'angular';
+import 'angular-mocks';
+import './src/app';
+
+let testsContext = require.context('./src', true, /\.spec$/);
+testsContext.keys().forEach(testsContext);
+```
+
+this `require.context` method creates a function that is then applied to each _.spec_ file present in _src_ folder
+
+In karma config file, we specify the `webpack` preprocessor to create the bundle when test is started. The preprocessor must be configured
+with same options we use when we actually create the bundle. We want to use same options as for development, except that we don't need `devServer`.
+I just created another config file specific to test environment and use it in _karma.conf.js_
+
+```javascript
+module.exports = function(config) {
+    config.set({
+        preprocessors: {
+            'webpack.tests.js': ['webpack'],
+        },
+        webpack: require('./webpack.config')({ env: 'test' }),
+    });
+};
+```
+
+Notice how we use mais webpack config as a function for merging common and test config.
+
+Finally, we add a script in _package.json_ to start test with command `npm test`.
+
+Once karma started, it watches for change, meaning that each time a file is modified, added or deleted, bundle is generated and all tests are run again.
+
 # initial readme
 
 ## Order System Sample Project

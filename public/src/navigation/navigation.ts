@@ -4,4 +4,8 @@ export let navigationComponent: ng.IComponentOptions = {
     controller,
 };
 
-function controller() {}
+function controller() {
+    const ctrl = this;
+
+    this.companyName = 'Awesome, Inc.';
+}
