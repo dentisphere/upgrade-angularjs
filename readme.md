@@ -515,6 +515,28 @@ Finally, we add a script in _package.json_ to start test with command `npm test`
 
 Once karma started, it watches for change, meaning that each time a file is modified, added or deleted, bundle is generated and all tests are run again.
 
+For more interesting tests, we add sinon library to create test doubles. It's important to understand the differences between type of test doubles (check this [interesting article](https://semaphoreci.com/community/tutorials/best-practices-for-spies-stubs-and-mocks-in-sinon-js) for
+more info):
+
+-   spy: allows assertions on calls, arguments... the original function behaviour is not affected.
+-   stub: like spy, but **replace** the target function. Use them when:
+    -   replace problematic pieces of code (network, database...)
+    -   trigger code paths (error handling)
+    -   test asynchronous code
+-   Mocks should be used primarily when you would use a stub, but need to verify multiple more specific behaviors on it.
+
+### notes
+
+-   There is some kind of bug in karma-webpack that can lead to confusion when using watch mode. This seems related to the way the preprocessor handles modules loaded with
+    `require.context('./src', true, /\.spec$/)`. See this [issue on github](https://github.com/webpack-contrib/karma-webpack/issues/49).
+    Symptoms: when there are syntax errors in spec file:
+
+    -   no error is reported to user
+    -   tests written in the spec file are not executed
+
+    The only clue for user that something went wrong is the total number of tests which is lower than it should be, but everything is green and this cannot be part of an automated validation process. I did not find a solution for this problem. There is a workaround to prevent webpack to generate its assets, so that no test are run at all, but this does not work for all errors, thus not reliable.
+    Note: when enabling `singleRun` option in _karma.conf.js_, the syntax error is properly reported.
+
 # initial readme
 
 ## Order System Sample Project
