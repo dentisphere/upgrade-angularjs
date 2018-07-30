@@ -21,11 +21,12 @@ import { productDetailComponent } from './productDetail/productDetail';
 import { productsComponent } from './products/products';
 import { ProductService } from './products/productService';
 import { AuthenticationService } from './shared/authenticationService';
-import { qAsPromise } from './config.qAsPromise';
+
+const MODULE_NAME = 'app';
+export default MODULE_NAME;
 
 angular
-    .module('app', ['ngRoute'])
-    .run(qAsPromise)
+    .module(MODULE_NAME, ['ngRoute'])
     .config(hashPrefixConfig)
     .config(routeConfig)
     .component('home', homeComponent)

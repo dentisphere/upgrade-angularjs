@@ -553,6 +553,64 @@ setting up tests was exciting at first, but I encounter many issues that makes m
     call is done. On the other hand, with trick enabled, calling `ctrl.$onInit` does not resolve, leaving us with timeout in tests.
 -   using TypeScript for tests may be cumbersome. It forces to add several imports for typescript compiler to shut up, while this is not necessary in JavaScript.
 
+## setup angular 6
+
+requires some dependencies.
+
+```bash
+npm install --save @angular/common  @angular/compiler @angular/core @angular/forms
+npm install --save @angular/http @angular/platform-browser @angular/platform-browser-dynamic @angular/router
+npm install --save @angular/upgrade
+npm install --save core-js reflect-metadata rxjs zone.js
+```
+
+rename app.ts to app.module.ajs.ts (ajs stands for angularJs) and export module name
+
+create app.module.ts
+
+```typescript
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { UpgradeModule } from '@angular/upgrade/static';
+import moduleName from './app.module.ajs';
+
+@NgModule({
+    imports: [BrowserModule, UpgradeModule],
+})
+export class AppModule {
+    constructor(private upgrade: UpgradeModule) {}
+    ngDoBootstrap() {
+        this.upgrade.bootstrap(document.documentElement, [moduleName], { strictDi: true });
+    }
+}
+```
+
+UpgradeModule is used to bootstrap ajs module when our angular module is bootstrapped.
+
+create main.ts that will become our webpack entry point
+
+```typescript
+import 'zone.js';
+import 'reflect-metadata';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { setAngularLib } from '@angular/upgrade/static';
+import * as angular from 'angular';
+import { AppModule } from './app.module';
+
+setAngularLib(angular);
+platformBrowserDynamic().bootstrapModule(AppModule);
+```
+
+This is the standard way to bootstrap an angular application from our angular module. We also use `setAngularLib` to load angularJs framework. This is a temporary instruction
+that will be removed once application has been totally upgraded. Zone.js and reflect-metadata are part of the upgrade process (TODO: check what are they for)
+
+Because we bootstrap the application from main.ts, we remove ng-app directive from index.html
+
+The Promise replacement by $q causes an error. We remove it and notice than everything works fine, except that bundle size is doubled in dev (about 6.2 MB versus 3.0 MB)
+and is also larger in prod (1.6 MB)
+
+We now have a starting point for upgrading our angular js elements to angular
+
 # initial readme
 
 ## Order System Sample Project
