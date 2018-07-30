@@ -111,5 +111,11 @@ describe('stubbing a class', () => {
             expect(stub.methodOne(25)).to.equal(50);
             expect(stub.methodOne(111)).to.equal(222);
         });
+
+        it.skip('return promise', async () => {
+            stub.methodOne.resolves(456);
+            const val = await stub.methodOne();
+            expect(val).to.equal(456);
+        });
     });
 });

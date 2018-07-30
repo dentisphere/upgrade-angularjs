@@ -326,11 +326,16 @@ when frontend calls `this.$http.get('/api/customers')`, the request is actually 
     in `productService.getProducts().then(data => ...)` will be an array
 -   There is a trick for replacing global `Promise` object by angular's $q, just check _config.qAsPromise.ts_ file and how it is run in main module.
     There are several advantages coming with this technique:
+
     -   works as a polyfill for older browsers who don't support promises
     -   scope is applied automatically when promise is fulfilled (automatic UI refresh)
     -   we can use `async`/`await` syntax for cleaner code
     -   we don't need to inject `$q` anymore in application
     -   solves first note of this list :-)
+
+    **EDIT** replacing Promise with `$q` seemed a good idea at the time, but it causes problems for tests where async/await hangs and test finally times out. These tests are
+    skipped for now until a solution is found...
+
 -   destructuring array works well when combined with `Promise.all`
 -   `$http` service type is `ng.IHttpService`. This implies some change in our code as the service methods return `ng.IPromise` instead of regular `Promise`. **edit**: better way is to make
     the method calling `$http` service `async`.
@@ -536,6 +541,17 @@ more info):
 
     The only clue for user that something went wrong is the total number of tests which is lower than it should be, but everything is green and this cannot be part of an automated validation process. I did not find a solution for this problem. There is a workaround to prevent webpack to generate its assets, so that no test are run at all, but this does not work for all errors, thus not reliable.
     Note: when enabling `singleRun` option in _karma.conf.js_, the syntax error is properly reported.
+
+### conclusion about unit testing in angularJS
+
+setting up tests was exciting at first, but I encounter many issues that makes me think there are limitations in what we can write for a test
+
+-   compiling directives or components and make assumptions on html is tricky. I could not find a way to use jQuery for getting desired elements and JQlite is too limited,
+    i could not find a way to write expectation like _"text of first <td> in first <row> equals some value"_
+-   dealing with asynchronous code is difficult. Part of the problem seems related to the trick where $q replaces Promise to allow await/async. When I don't use the trick,
+    I could not check expectation about component html because `ctrl.$onInit` is done asynchronously, and it forces us to add calls to `$scope.digest()` whenever an async
+    call is done. On the other hand, with trick enabled, calling `ctrl.$onInit` does not resolve, leaving us with timeout in tests.
+-   using TypeScript for tests may be cumbersome. It forces to add several imports for typescript compiler to shut up, while this is not necessary in JavaScript.
 
 # initial readme
 
