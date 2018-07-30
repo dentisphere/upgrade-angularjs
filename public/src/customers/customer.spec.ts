@@ -76,7 +76,7 @@ describe('Customers component', () => {
             });
         });
 
-        it.only('should have one data row per customer', () => {
+        it('should have one data row per customer', () => {
             customerServiceStub.getCustomers.resolves([{ fullName: 'Sergio' }, { fullname: 'Isabelle' }]);
 
             var element: any = $compile('<customers></customers>')($rootScope);
