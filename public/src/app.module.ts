@@ -8,7 +8,7 @@ import { NavigationComponent } from './navigation/navigation.component';
 import { DiscountComponent } from './customerDetail/discount.component';
 import { httpServiceProvider } from './ajs-upgraded.providers';
 import { CustomerService } from './customers/customer.service';
-import { OrderService } from './orders/order-service';
+import { OrderService } from './orders/order.service';
 import { ProductService } from './products/product.service';
 import { AddressService } from './shared/address.service';
 import { AuthenticationService } from './shared/authentication.service';

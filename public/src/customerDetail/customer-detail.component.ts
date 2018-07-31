@@ -1,7 +1,7 @@
 import * as moment from 'moment';
 import { CustomerService } from '../customers/customer.service';
 import { AddressService } from '../shared/address.service';
-import { OrderService } from '../orders/order-service';
+import { OrderService } from '../orders/order.service';
 import { OnInit, Input, Component } from '@angular/core';
 
 @Component({

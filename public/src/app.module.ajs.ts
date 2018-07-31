@@ -16,7 +16,7 @@ import { CustomerService } from './customers/customer.service';
 import { NavigationComponent } from './navigation/navigation.component';
 import { orderDetailComponent } from './orderDetail/orderDetail';
 import { ordersComponent } from './orders/orders';
-import { OrderService } from './orders/order-service';
+import { OrderService } from './orders/order.service';
 import { productDetailComponent } from './productDetail/productDetail';
 import { productsComponent } from './products/products';
 import { ProductService } from './products/product.service';

@@ -3,7 +3,7 @@ import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 
 @Component({
     selector: 'discount',
-    templateUrl: './discount.html',
+    templateUrl: './discount.component.html',
 })
 export class DiscountComponent implements OnInit {
     @Input() customerDiscount: any;
