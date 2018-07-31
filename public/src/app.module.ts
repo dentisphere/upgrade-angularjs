@@ -13,12 +13,14 @@ import { ProductService } from './products/product.service';
 import { AddressService } from './shared/address.service';
 import { AuthenticationService } from './shared/authentication.service';
 import { CustomerDetailComponent } from './customerDetail/customer-detail.component';
+import { CustomersComponent } from './customers/customers.component';
 
 @NgModule({
     imports: [BrowserModule, UpgradeModule, FormsModule],
     declarations: [
         //
         CustomerDetailComponent,
+        CustomersComponent,
         DiscountComponent,
         HomeComponent,
         NavigationComponent,
@@ -26,6 +28,7 @@ import { CustomerDetailComponent } from './customerDetail/customer-detail.compon
     entryComponents: [
         //
         CustomerDetailComponent,
+        CustomersComponent,
         DiscountComponent,
         HomeComponent,
         NavigationComponent,

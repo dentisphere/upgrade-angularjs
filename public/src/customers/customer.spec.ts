@@ -5,7 +5,7 @@ import { expect } from 'chai';
 import * as sinon from 'sinon';
 import * as sinonChai from 'sinon-chai';
 import { CustomerService } from './customer.service';
-import { customersComponent } from './customers';
+import { CustomersComponent } from './customers.component';
 
 chai.use(sinonChai);
 

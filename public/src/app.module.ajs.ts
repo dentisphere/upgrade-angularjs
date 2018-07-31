@@ -11,7 +11,7 @@ import { routeConfig } from './config.routes';
 import { AddressService } from './shared/address.service';
 import { CustomerDetailComponent } from './customerDetail/customer-detail.component';
 import { DiscountComponent } from './customerDetail/discount.component';
-import { customersComponent } from './customers/customers';
+import { CustomersComponent } from './customers/customers.component';
 import { CustomerService } from './customers/customer.service';
 import { NavigationComponent } from './navigation/navigation.component';
 import { orderDetailComponent } from './orderDetail/orderDetail';
@@ -33,7 +33,7 @@ angular
     .directive('home', downgradeComponent({ component: HomeComponent }))
     .directive('customerDetail', downgradeComponent({ component: CustomerDetailComponent }))
     .directive('discount', downgradeComponent({ component: DiscountComponent }))
-    .component('customers', customersComponent)
+    .directive('customers', downgradeComponent({ component: CustomersComponent }))
     .directive('navigation', downgradeComponent({ component: NavigationComponent }))
     .component('orderDetail', orderDetailComponent)
     .component('orders', ordersComponent)
