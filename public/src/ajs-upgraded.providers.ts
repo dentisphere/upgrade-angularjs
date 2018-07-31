@@ -1,5 +1,3 @@
-import { Provider } from '@angular/compiler/src/core';
-
 export function httpServiceFactory(i: any) {
     return i.get('$http');
 }

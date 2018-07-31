@@ -1,4 +1,3 @@
-import * as _ from 'lodash';
 import { Inject, Injectable } from '@angular/core';
 
 @Injectable()
