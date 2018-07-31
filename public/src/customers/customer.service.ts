@@ -1,22 +1,20 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Customer } from './customer.interface';
 
 @Injectable()
 export class CustomerService {
-    constructor(@Inject('$http') private $http: ng.IHttpService) {}
+    constructor(private http: HttpClient) {}
 
-    async getCustomers(): Promise<Customer[]> {
-        const response = await this.$http.get<Customer[]>('/api/customers');
-        return response.data;
+    getCustomers(): Promise<Customer[]> {
+        return this.http.get<Customer[]>('/api/customers').toPromise();
     }
 
-    async getCustomer(id: number): Promise<Customer> {
-        const response = await this.$http.get<Customer>(`/api/customers/${id}`);
-        return response.data;
+    getCustomer(id: number): Promise<Customer> {
+        return this.http.get<Customer>(`/api/customers/${id}`).toPromise();
     }
 
-    async postCustomer(customer: Customer): Promise<Customer> {
-        const response = await this.$http.post<Customer>('/api/customers', customer);
-        return response.data;
+    postCustomer(customer: Customer): Promise<Customer> {
+        return this.http.post<Customer>('/api/customers', customer).toPromise();
     }
 }

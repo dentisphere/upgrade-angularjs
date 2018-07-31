@@ -1,24 +1,20 @@
 import { Injectable, Inject } from '@angular/core';
 import { Product } from './product.interface';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class ProductService {
-    public static $inject = ['$http'];
+    constructor(private http: HttpClient) {}
 
-    constructor(@Inject('$http') private $http: ng.IHttpService) {}
-
-    async getProducts(): Promise<Product[]> {
-        const response = await this.$http.get<Product[]>('/api/products');
-        return response.data;
+    getProducts(): Promise<Product[]> {
+        return this.http.get<Product[]>('/api/products').toPromise();
     }
 
-    async getProduct(id: number): Promise<Product> {
-        const response = await this.$http.get<Product>(`/api/products/${id}`);
-        return response.data;
+    getProduct(id: number): Promise<Product> {
+        return this.http.get<Product>(`/api/products/${id}`).toPromise();
     }
 
-    async postProduct(product: Product): Promise<Product> {
-        const response = await this.$http.post<Product>('/api/products', product);
-        return response.data;
+    postProduct(product: Product): Promise<Product> {
+        return this.http.post<Product>('/api/products', product).toPromise();
     }
 }

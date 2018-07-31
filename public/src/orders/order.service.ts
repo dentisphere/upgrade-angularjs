@@ -1,28 +1,24 @@
-import * as _ from 'lodash';
 import { Injectable, Inject } from '@angular/core';
 import { Order } from './order.interface';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class OrderService {
-    constructor(@Inject('$http') private $http: ng.IHttpService) {}
+    constructor(private $http: HttpClient) {}
 
-    async getOrders(): Promise<Order[]> {
-        const response = await this.$http.get<Order[]>('/api/orders');
-        return response.data;
+    getOrders(): Promise<Order[]> {
+        return this.$http.get<Order[]>('/api/orders').toPromise();
     }
 
-    async getOrder(id: number): Promise<Order> {
-        const response = await this.$http.get<Order>(`/api/orders/${id}`);
-        return response.data;
+    getOrder(id: number): Promise<Order> {
+        return this.$http.get<Order>(`/api/orders/${id}`).toPromise();
     }
 
-    async getOrdersByCustomer(customerId: number): Promise<Order[]> {
-        const response = await this.$http.get<Order[]>(`/api/customers/${customerId}/orders`);
-        return response.data;
+    getOrdersByCustomer(customerId: number): Promise<Order[]> {
+        return this.$http.get<Order[]>(`/api/customers/${customerId}/orders`).toPromise();
     }
 
-    async postOrder(order: Order): Promise<Order> {
-        const response = await this.$http.post<Order>('/api/orders', order);
-        return response.data;
+    postOrder(order: Order): Promise<Order> {
+        return this.$http.post<Order>('/api/orders', order).toPromise();
     }
 }
