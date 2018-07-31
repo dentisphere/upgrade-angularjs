@@ -5,32 +5,40 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Order } from '../orders/order.interface';
 import { Customer } from '../customers/customer.interface';
 import { Product } from '../products/product.interface';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'order-detail',
     templateUrl: './order-detail.component.html',
 })
 export class OrderDetailComponent implements OnInit {
-    @Input() order: Order;
+    order: Order;
     title = 'Order Detail';
     customer: Customer;
 
-    constructor(private productService: ProductService, private customerService: CustomerService) {}
+    constructor(
+        private productService: ProductService,
+        private customerService: CustomerService,
+        private route: ActivatedRoute,
+    ) {}
 
     async ngOnInit(): Promise<void> {
         let products: Product[];
 
-        [products, this.customer] = await Promise.all([
-            this.productService.getProducts(),
-            this.customerService.getCustomer(this.order.customerId),
-        ]);
+        this.route.data.subscribe(async data => {
+            this.order = data.order;
+            [products, this.customer] = await Promise.all([
+                this.productService.getProducts(),
+                this.customerService.getCustomer(this.order.customerId),
+            ]);
 
-        this.order.items.forEach(item => {
-            var product = _.find(products, product => {
-                return product.id === item.productId;
+            this.order.items.forEach(item => {
+                var product = _.find(products, product => {
+                    return product.id === item.productId;
+                });
+                item.productName = product.name;
+                item.itemPrice = item.quantity * product.price;
             });
-            item.productName = product.name;
-            item.itemPrice = item.quantity * product.price;
         });
     }
 }
