@@ -32,7 +32,7 @@ export function routeConfig($routeProvider: ng.route.IRouteProvider): void {
             },
         })
         .when('/orders/:id', {
-            template: '<order-detail order="$resolve.order"></order-detail>',
+            template: '<order-detail [order]="$resolve.order"></order-detail>',
             resolve: {
                 order: [
                     '$route',

@@ -1,12 +1,12 @@
 <div class="row">
-    <h1>{{$ctrl.title}}: {{$ctrl.order.id}}</h1>
+    <h1>{{title}}: {{order.id}}</h1>
 </div>
 <div class="row">
     <div class="col-md-3">
         <h3>Customer Name:</h3>
     </div>
     <div class="col-md-4 end">
-        <h3>{{$ctrl.customer.fullName}}</h3>
+        <h3>{{customer?.fullName}}</h3>
     </div>
 </div>
 <div class="row">
@@ -22,12 +22,13 @@
                 </tr>
             </thead>
             <tbody>
-                <tr data-ng-repeat="item in $ctrl.order.items">
+                <tr *ngFor="let item of order.items">
                     <td>
-                        <a data-ng-href="#/products/{{item.productId}}">{{item.productId}}</td>
+                        <a href="#/products/{{item.productId}}">{{item.productId}}</a>
+                    </td>
                     <td>{{item.productName}}</td>
                     <td>{{item.quantity}}</td>
-                    <td>{{item.itemPrice | currency}}</td>
+                    <td>{{item.itemPrice | currency:'USD':'symbol'}}</td>
                 </tr>
             </tbody>
         </table>
@@ -35,24 +36,24 @@
 </div>
 <div
     class="row"
-    data-ng-if="$ctrl.customer.getsDiscount"
+    *ngIf="customer?.getsDiscount"
 >
     <div class="col-md-3">
         <h4>Total Cost:</h4>
     </div>
     <div class="col-md-4 end">
-        <h4>{{$ctrl.order.totalCost | currency}}</h4>
+        <h4>{{order.totalCost | currency:'USD':'symbol'}}</h4>
     </div>
 </div>
 <div
     class="row"
-    data-ng-if="$ctrl.customer.getsDiscount"
+    *ngIf="customer?.getsDiscount"
 >
     <div class="col-md-3">
         <h4>Customer Discount:</h4>
     </div>
     <div class="col-md-4 end">
-        <h4>{{$ctrl.customer.discount.discountPercent}}%</h4>
+        <h4>{{customer.discount.discountPercent}}%</h4>
     </div>
 </div>
 <div class="row">
@@ -60,6 +61,6 @@
         <h4>Total Sale:</h4>
     </div>
     <div class="col-md-4 end">
-        <h4>{{$ctrl.order.totalSale | currency}}</h4>
+        <h4>{{order.totalSale | currency:'USD':'symbol'}}</h4>
     </div>
 </div>

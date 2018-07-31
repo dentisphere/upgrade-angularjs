@@ -723,6 +723,12 @@ To inject the upgraded service, use `@Inject` annotation where dependency inject
 constructor(@Inject('$http') private $http: ng.IHttpService) {}
 ```
 
+Best practice: use typescript elvis `?.` operator in templates to avoid errors while initialization is not finished.
+
+```html
+<h3>{{customer?.fullName}}</h3>
+```
+
 # initial readme
 
 ## Order System Sample Project
