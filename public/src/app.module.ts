@@ -12,17 +12,20 @@ import { OrderService } from './orders/order-service';
 import { ProductService } from './products/product.service';
 import { AddressService } from './shared/address.service';
 import { AuthenticationService } from './shared/authentication.service';
+import { CustomerDetailComponent } from './customerDetail/customer-detail.component';
 
 @NgModule({
     imports: [BrowserModule, UpgradeModule, FormsModule],
     declarations: [
         //
+        CustomerDetailComponent,
         DiscountComponent,
         HomeComponent,
         NavigationComponent,
     ],
     entryComponents: [
         //
+        CustomerDetailComponent,
         DiscountComponent,
         HomeComponent,
         NavigationComponent,

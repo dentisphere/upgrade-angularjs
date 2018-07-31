@@ -658,7 +658,20 @@ becomes
 ></discount>
 ```
 
-another change to be made in parent template is the way callbacks arguments are passed
+This has to be done as well if component is used in a route template:
+
+```typescript
+$routeProvider.when('/customers/:id', {
+    template: '<customer-detail [customer]="$resolve.customer"></customer-detail>',
+    resolve: {
+        customer: [
+            /*... */
+        ],
+    },
+});
+```
+
+Another change to be made in parent template is the way callback arguments are passed
 
 ```typescript
 ctrl.updateDiscount = function(selectedDiscount: any): void {
