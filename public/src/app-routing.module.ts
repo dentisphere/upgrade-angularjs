@@ -8,7 +8,7 @@ import { ProductsComponent } from './products/products.component';
 import { ProductDetailComponent } from './productDetail/product-detail.component';
 import { OrderDetailComponent } from './orderDetail/order-detail.component';
 import { CustomerDetailComponent } from './customerDetail/customer-detail.component';
-import { APP_BASE_HREF, LocationStrategy, HashLocationStrategy, PathLocationStrategy } from '@angular/common';
+import { APP_BASE_HREF, LocationStrategy, HashLocationStrategy } from '@angular/common';
 
 const routes: Routes = [
     { path: 'home', component: HomeComponent },
