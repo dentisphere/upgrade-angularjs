@@ -16,7 +16,7 @@
             <tbody>
                 <tr *ngFor="let customer of customers">
                     <td>
-                        <a href="#/customers/{{customer.id}}">{{customer.fullName}}</a>
+                        <a [routerLink]="['/customers', customer.id]">{{customer.fullName}}</a>
                     </td>
                     <td>{{customer.address1}}</td>
                     <td>{{customer.address2}}</td>

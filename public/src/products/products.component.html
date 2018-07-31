@@ -13,7 +13,7 @@
             <tbody>
                 <tr *ngFor="let product of products">
                     <td>
-                        <a href="#/products/{{product.id}}">{{product.id}}</a>
+                        <a [routerLink]="['/products', product.id]">{{product.id}}</a>
                     </td>
                     <td>{{product.name}}</td>
                     <td>{{product.color}}</td>
