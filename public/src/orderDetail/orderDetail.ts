@@ -1,5 +1,5 @@
 import * as _ from 'lodash';
-import { ProductService } from '../products/productService';
+import { ProductService } from '../products/product.service';
 import { CustomerService } from '../customers/customer.service';
 
 export let orderDetailComponent: ng.IComponentOptions = {

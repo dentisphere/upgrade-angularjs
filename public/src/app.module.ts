@@ -9,6 +9,7 @@ import { DiscountComponent } from './customerDetail/discount.component';
 import { httpServiceProvider } from './ajs-upgraded.providers';
 import { CustomerService } from './customers/customer.service';
 import { OrderService } from './orders/order-service';
+import { ProductService } from './products/product.service';
 
 @NgModule({
     imports: [BrowserModule, UpgradeModule, FormsModule],
@@ -29,6 +30,7 @@ import { OrderService } from './orders/order-service';
         httpServiceProvider,
         CustomerService,
         OrderService,
+        ProductService,
     ],
 })
 export class AppModule {

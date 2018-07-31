@@ -1,5 +1,5 @@
 import { CustomerService } from './customers/customer.service';
-import { ProductService } from './products/productService';
+import { ProductService } from './products/product.service';
 import { OrderService } from './orders/order-service';
 
 routeConfig.$inject = ['$routeProvider'];

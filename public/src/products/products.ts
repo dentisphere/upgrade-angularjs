@@ -1,4 +1,4 @@
-import { ProductService } from './productService';
+import { ProductService } from './product.service';
 
 export let productsComponent: ng.IComponentOptions = {
     templateUrl: './products.html',

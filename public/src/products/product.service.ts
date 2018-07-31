@@ -1,7 +1,10 @@
+import { Injectable, Inject } from '@angular/core';
+
+@Injectable()
 export class ProductService {
     public static $inject = ['$http'];
 
-    constructor(private $http: ng.IHttpService) {}
+    constructor(@Inject('$http') private $http: ng.IHttpService) {}
 
     async getProducts(): Promise<any[]> {
         const response = await this.$http.get<any[]>('/api/products');
