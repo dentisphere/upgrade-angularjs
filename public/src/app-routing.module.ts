@@ -9,13 +9,14 @@ import { ProductDetailComponent } from './productDetail/product-detail.component
 import { OrderDetailComponent } from './orderDetail/order-detail.component';
 import { CustomerDetailComponent } from './customerDetail/customer-detail.component';
 import { APP_BASE_HREF, LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { CustomerDetailResolver } from './customerDetail/customer-detail.resolver';
 
 const routes: Routes = [
     { path: 'home', component: HomeComponent },
     { path: 'customers', component: CustomersComponent },
     { path: 'orders', component: OrdersComponent },
     { path: 'products', component: ProductsComponent },
-    { path: 'customers/:id', component: CustomerDetailComponent },
+    { path: 'customers/:id', component: CustomerDetailComponent, resolve: { customer: CustomerDetailResolver } },
     { path: 'orders/:id', component: OrderDetailComponent },
     { path: 'products/:id', component: ProductDetailComponent },
     { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -28,6 +29,7 @@ const routes: Routes = [
         //
         { provide: APP_BASE_HREF, useValue: '' },
         { provide: LocationStrategy, useClass: HashLocationStrategy },
+        CustomerDetailResolver,
     ],
 })
 export class AppRoutingModule {}

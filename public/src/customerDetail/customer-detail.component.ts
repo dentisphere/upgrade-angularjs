@@ -1,10 +1,12 @@
 import * as moment from 'moment';
-import { CustomerService } from '../customers/customer.service';
+import { OnInit, Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+
 import { AddressService } from '../shared/address.service';
-import { OrderService } from '../orders/order.service';
-import { OnInit, Input, Component } from '@angular/core';
 import { Customer } from '../customers/customer.interface';
+import { CustomerService } from '../customers/customer.service';
 import { Order } from '../orders/order.interface';
+import { OrderService } from '../orders/order.service';
 import { SelectedDiscountEvent } from './discount.component';
 
 @Component({
@@ -12,7 +14,7 @@ import { SelectedDiscountEvent } from './discount.component';
     templateUrl: './customer-detail.component.html',
 })
 export class CustomerDetailComponent implements OnInit {
-    @Input() customer: Customer;
+    customer: Customer;
     private title: string;
     private discountTemplate: string;
     private address: string;
@@ -22,15 +24,19 @@ export class CustomerDetailComponent implements OnInit {
         private addressService: AddressService,
         private orderService: OrderService,
         private customerService: CustomerService,
+        private route: ActivatedRoute,
     ) {}
 
-    async ngOnInit(): Promise<void> {
-        this.title = 'Customer Detail';
-        this.discountTemplate = '../customerDetail/discount.html';
-        this.address = this.addressService.getFullAddress(this.customer);
-        this.orders = await this.orderService.getOrdersByCustomer(this.customer.id);
-        this.orders.forEach(order => {
-            order.orderDate = moment(order.orderDate).format('MM/DD/YYYY');
+    ngOnInit(): void {
+        this.route.data.subscribe(async data => {
+            this.customer = data.customer;
+            this.title = 'Customer Detail';
+            this.discountTemplate = '../customerDetail/discount.html';
+            this.address = this.addressService.getFullAddress(this.customer);
+            this.orders = await this.orderService.getOrdersByCustomer(this.customer.id);
+            this.orders.forEach(order => {
+                order.orderDate = moment(order.orderDate).format('MM/DD/YYYY');
+            });
         });
     }
 
