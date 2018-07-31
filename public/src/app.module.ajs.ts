@@ -5,7 +5,7 @@ import 'jquery';
 import * as angular from 'angular';
 import 'angular-route';
 
-import { homeComponent } from './home/home';
+import { HomeComponent } from './home/home.component';
 import { hashPrefixConfig } from './config.hashprefix';
 import { routeConfig } from './config.routes';
 import { AddressService } from './shared/addressService';
@@ -21,6 +21,7 @@ import { productDetailComponent } from './productDetail/productDetail';
 import { productsComponent } from './products/products';
 import { ProductService } from './products/productService';
 import { AuthenticationService } from './shared/authenticationService';
+import { downgradeComponent } from '@angular/upgrade/static';
 
 const MODULE_NAME = 'app';
 export default MODULE_NAME;
@@ -29,7 +30,7 @@ angular
     .module(MODULE_NAME, ['ngRoute'])
     .config(hashPrefixConfig)
     .config(routeConfig)
-    .component('home', homeComponent)
+    .directive('home', downgradeComponent({ component: HomeComponent }))
     .component('customerDetail', customerDetailComponent)
     .component('discount', discountComponent)
     .component('customers', customersComponent)
