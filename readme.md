@@ -1,3 +1,31 @@
+# initial readme
+
+## Order System Sample Project
+
+This is the repo for the [Upgrading AngularJS](http://www.upgradingangularjs.com) sample project. This project is used starting in course 1, module 2, until the end of course 3.
+
+You may see slight variations in this sample code from the course videos. That just means certain files or pieces of code were removed because they weren't needed, or that improvements were made to the sample project. All of the core functionality will be in both the videos and the project.
+
+I've made commits at each module and each assignment throughout all three courses.
+
+### Server
+
+This project comes with an Express server (the `server` folder) that you'll use beginning in course 2, module 6.
+
+Prior to then, you can just use a simple http server such as [static-server](https://www.npmjs.com/package/static-server) to serve up the `public` folder. To use `static-server`:
+
+1.  Install globally by running `npm -g install static-server`
+2.  `cd` into the `public` folder
+3.  Run `static-server`
+
+Once you've reached course 2, module 6, here's how to run the Express server:
+
+1.  `cd` into the `server` folder
+2.  Run `npm install`
+3.  Run `npm start`
+
+Note that both of these options will require [node](http://www.nodejs.org) to be installed (which we cover in course 1, module 3).
+
 # upgrading an angularJs 1.3 project to angular 6 / webpack project
 
 ## organize by features
@@ -874,30 +902,72 @@ module.exports = {
 
 -   now that templates are compiled as if they were injected in .ts files, we may encounter visibility problems since the template cannot access private variable in component class. Make sure fields used in template are public...
 
-# initial readme
+## change routing
 
-## Order System Sample Project
+we want to get rid of old routing and replace by ng6 routing.
 
-This is the repo for the [Upgrading AngularJS](http://www.upgradingangularjs.com) sample project. This project is used starting in course 1, module 2, until the end of course 3.
+We need a new <ordersystem-app> as root component. We create a simple component with only selector and template:
 
-You may see slight variations in this sample code from the course videos. That just means certain files or pieces of code were removed because they weren't needed, or that improvements were made to the sample project. All of the core functionality will be in both the videos and the project.
+```ts
+@Component({
+    selector: 'ordersystem-app',
+    template: `
+        <navigation></navigation>
+        <div class="container">
+            <router-outlet></router-outlet>
+        </div>
+      `,
+})
+export class AppComponent {}
+```
 
-I've made commits at each module and each assignment throughout all three courses.
+`<router-outlet>` will be replaced by the component matching a specific route.
 
-### Server
+This component must be declared in main module and added to the _bootstrap_ option like in code below.
 
-This project comes with an Express server (the `server` folder) that you'll use beginning in course 2, module 6.
+Since angularJs will not be loaded anymore, we import HttpClientModule and use it in services where $http was used.
 
-Prior to then, you can just use a simple http server such as [static-server](https://www.npmjs.com/package/static-server) to serve up the `public` folder. To use `static-server`:
+Routes are defined in a separate module: _app-routing.module.ts_ which must be imported in main module:
 
-1.  Install globally by running `npm -g install static-server`
-2.  `cd` into the `public` folder
-3.  Run `static-server`
+```ts
+@NgModule({
+    imports: [/*...*/ HttpClientModule, AppRoutingModule],
+    declarations: [
+        AppComponent,
+        /*...*/
+    ],
+    entryComponents: [
+        /*...*/
+    ],
+    providers: [
+        /*...*/
+    ],
+    bootstrap: [AppComponent],
+})
+export class AppModule {}
+```
 
-Once you've reached course 2, module 6, here's how to run the Express server:
+`href` should become `routerLink` in html templates. Use `[routerLink]` when interpolation is needed:
 
-1.  `cd` into the `server` folder
-2.  Run `npm install`
-3.  Run `npm start`
+```html
+<a [routerLink]="['/products', item.productId]">{{item.productId}}</a>
+```
 
-Note that both of these options will require [node](http://www.nodejs.org) to be installed (which we cover in course 1, module 3).
+Routes where `$resolve` was previously used must use a dedicated Resolver, i.e. an `@Injectable` class implementing `Resolve<T>`
+
+Steps:
+
+1.  add `@Injectable` class implementing `Resolve<T>`. In resolve implementation, use route.paramMap to collect parameters pass throuth the route. For instance, if route is defined like `/customers/:id` and actual route is `/customers/123`, `route.paramMap.get('id')` will return `'123'` (string value!)
+2.  in component where resolved resource must be used, inject `route: ActivatedRoute` in constructor, and subscribe to `route.data` to store data,
+3.  in routes, add resolver class and add it to providers
+
+```ts
+const routes: Routes = [
+    { path: 'customers/:id', component: CustomerDetailComponent, resolve: { customer: CustomerDetailResolver } },
+];
+
+@NgModule({
+    providers: [CustomerDetailResolver],
+})
+export class AppRoutingModule {}
+```
