@@ -1,7 +1,7 @@
 import * as moment from 'moment';
 import { CustomerService } from '../customers/customer.service';
 import { AddressService } from '../shared/addressService';
-import { OrderService } from '../orders/orderService';
+import { OrderService } from '../orders/order-service';
 
 export let customerDetailComponent: ng.IComponentOptions = {
     templateUrl: './customerDetail.html',

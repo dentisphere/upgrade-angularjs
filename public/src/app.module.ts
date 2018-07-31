@@ -8,6 +8,7 @@ import { NavigationComponent } from './navigation/navigation.component';
 import { DiscountComponent } from './customerDetail/discount.component';
 import { httpServiceProvider } from './ajs-upgraded.providers';
 import { CustomerService } from './customers/customer.service';
+import { OrderService } from './orders/order-service';
 
 @NgModule({
     imports: [BrowserModule, UpgradeModule, FormsModule],
@@ -27,6 +28,7 @@ import { CustomerService } from './customers/customer.service';
         //
         httpServiceProvider,
         CustomerService,
+        OrderService,
     ],
 })
 export class AppModule {
