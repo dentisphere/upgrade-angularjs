@@ -10,6 +10,7 @@ import { httpServiceProvider } from './ajs-upgraded.providers';
 import { CustomerService } from './customers/customer.service';
 import { OrderService } from './orders/order-service';
 import { ProductService } from './products/product.service';
+import { AddressService } from './shared/address.service';
 
 @NgModule({
     imports: [BrowserModule, UpgradeModule, FormsModule],
@@ -31,6 +32,7 @@ import { ProductService } from './products/product.service';
         CustomerService,
         OrderService,
         ProductService,
+        AddressService,
     ],
 })
 export class AppModule {

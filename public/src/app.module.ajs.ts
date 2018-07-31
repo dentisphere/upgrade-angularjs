@@ -8,7 +8,7 @@ import 'angular-route';
 import { HomeComponent } from './home/home.component';
 import { hashPrefixConfig } from './config.hashprefix';
 import { routeConfig } from './config.routes';
-import { AddressService } from './shared/addressService';
+import { AddressService } from './shared/address.service';
 import { customerDetailComponent } from './customerDetail/customerDetail';
 import { DiscountComponent } from './customerDetail/discount.component';
 import { customersComponent } from './customers/customers';
@@ -42,5 +42,5 @@ angular
     .factory('orderService', downgradeInjectable(OrderService))
     .factory('customerService', downgradeInjectable(CustomerService))
     .factory('productService', downgradeInjectable(ProductService))
-    .service('addressService', AddressService)
+    .factory('addressService', downgradeInjectable(AddressService))
     .service('authenticationService', AuthenticationService);
