@@ -615,7 +615,7 @@ We now have a starting point for upgrading our angular js elements to angular
 
 to upgrade a component:
 
-1.  rename home.ts to home.component.ts
+1.  rename home.ts to home.component.ts (for consistence with ng6)
 1.  transform controller function to class and export it
     -   add @Component annotation with {selector, templateUrl}
     -   implements OnInit if necessary
@@ -627,6 +627,13 @@ to upgrade a component:
 1.  replace component declaration by directive in app.module.ajs
     `.directive('home', downgradeComponent({ component: HomeComponent }))`
 1.  add component to declarations and entrypoints un app.module
+
+to upgrade a service
+
+1.  rename file _customerService.ts_ to _customer.service.ts_ (for consistence with ng6)
+1.  add @Injectable annotation to the class
+1.  inject dependency with @Inject annotation on constructor argument (see note) for ajs-upgraded service
+1.  add service to app.module providers
 
 ### notes
 
@@ -672,11 +679,35 @@ ctrl.updateDiscount = function($event: any): void {
 Make sure to give a generic parameter to the EventEmitter, otherwise no data will be passed when callback is invoked:
 
 ```typescript
-    @Output() update = new EventEmitter<any>();
-    // or, better
-    @Output() update = new EventEmitter<{selectedDiscount: any}>();
-    // or, even better, but requires Discount interface to have been declared
-    @Output() update = new EventEmitter<{selectedDiscount: Discount}>();
+@Output() update = new EventEmitter<any>();
+// or, better
+@Output() update = new EventEmitter<{selectedDiscount: any}>();
+// or, even better, but requires Discount interface to have been declared
+@Output() update = new EventEmitter<{selectedDiscount: Discount}>();
+```
+
+Renaming a file like _customerService.ts_ to _customer.service.ts_ may break many files where `CustomerService` is imported for typing variables or arguments. Maybe should we consider to name files properly sooner in the process. Fortunately, Visual Studio Code is smart enough to detect change in file names and can fix all related imports.
+
+When converting a component or a service, all dependencies must be ng6 elements. If a dependency is not upgraded yet, or for angular JS services like `$http` or `$location`, we can add create some kind of wrapper in a file like _ajs-upgraded.providers.ts_, adding for each service a service factory function and a service provider object.
+
+```typescript
+export function httpServiceFactory(i: any) {
+    return i.get('$http'); // angular js service name, cannot be changed
+}
+
+export const httpServiceProvider = {
+    provide: '$http', // provider name available in ng6 elements (used with @Inject), can be changed
+    useFactory: httpServiceFactory,
+    deps: ['$injector'],
+};
+```
+
+Service provider must be added to _app.module.ts_ providers.
+
+To inject the upgraded service, use `@Inject` annotation where dependency injection is used (typically in a constructor)
+
+```typescript
+constructor(@Inject('$http') private $http: ng.IHttpService) {}
 ```
 
 # initial readme
