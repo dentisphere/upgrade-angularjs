@@ -11,28 +11,30 @@ import { CustomerService } from './customers/customer.service';
 import { OrderService } from './orders/order-service';
 import { ProductService } from './products/product.service';
 import { AddressService } from './shared/address.service';
+import { AuthenticationService } from './shared/authentication.service';
 
 @NgModule({
     imports: [BrowserModule, UpgradeModule, FormsModule],
     declarations: [
         //
+        DiscountComponent,
         HomeComponent,
         NavigationComponent,
-        DiscountComponent,
     ],
     entryComponents: [
         //
+        DiscountComponent,
         HomeComponent,
         NavigationComponent,
-        DiscountComponent,
     ],
     providers: [
         //
-        httpServiceProvider,
+        AddressService,
+        AuthenticationService,
         CustomerService,
+        httpServiceProvider,
         OrderService,
         ProductService,
-        AddressService,
     ],
 })
 export class AppModule {

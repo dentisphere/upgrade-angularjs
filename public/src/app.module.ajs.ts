@@ -20,7 +20,7 @@ import { OrderService } from './orders/order-service';
 import { productDetailComponent } from './productDetail/productDetail';
 import { productsComponent } from './products/products';
 import { ProductService } from './products/product.service';
-import { AuthenticationService } from './shared/authenticationService';
+import { AuthenticationService } from './shared/authentication.service';
 import { downgradeComponent, downgradeInjectable } from '@angular/upgrade/static';
 
 const MODULE_NAME = 'app';
