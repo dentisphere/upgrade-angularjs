@@ -12,7 +12,7 @@ import { AddressService } from './shared/addressService';
 import { customerDetailComponent } from './customerDetail/customerDetail';
 import { DiscountComponent } from './customerDetail/discount.component';
 import { customersComponent } from './customers/customers';
-import { CustomerService } from './customers/customerService';
+import { CustomerService } from './customers/customer.service';
 import { NavigationComponent } from './navigation/navigation.component';
 import { orderDetailComponent } from './orderDetail/orderDetail';
 import { ordersComponent } from './orders/orders';
@@ -21,7 +21,7 @@ import { productDetailComponent } from './productDetail/productDetail';
 import { productsComponent } from './products/products';
 import { ProductService } from './products/productService';
 import { AuthenticationService } from './shared/authenticationService';
-import { downgradeComponent } from '@angular/upgrade/static';
+import { downgradeComponent, downgradeInjectable } from '@angular/upgrade/static';
 
 const MODULE_NAME = 'app';
 export default MODULE_NAME;
@@ -40,7 +40,7 @@ angular
     .component('productDetail', productDetailComponent)
     .component('products', productsComponent)
     .service('orderService', OrderService)
-    .service('customerService', CustomerService)
+    .factory('customerService', downgradeInjectable(CustomerService))
     .service('productService', ProductService)
     .service('addressService', AddressService)
     .service('authenticationService', AuthenticationService);

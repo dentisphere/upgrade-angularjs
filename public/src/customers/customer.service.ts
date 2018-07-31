@@ -1,9 +1,11 @@
 import * as _ from 'lodash';
+import { Inject, Injectable } from '@angular/core';
 
+@Injectable()
 export class CustomerService {
     public static $inject = ['$http'];
 
-    constructor(private $http: ng.IHttpService) {}
+    constructor(@Inject('$http') private $http: ng.IHttpService) {}
 
     async getCustomers(): Promise<any> {
         const response = await this.$http.get<any>('/api/customers');

@@ -6,11 +6,28 @@ import moduleName from './app.module.ajs';
 import { HomeComponent } from './home/home.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { DiscountComponent } from './customerDetail/discount.component';
+import { httpServiceProvider } from './ajs-upgraded.providers';
+import { CustomerService } from './customers/customer.service';
 
 @NgModule({
     imports: [BrowserModule, UpgradeModule, FormsModule],
-    declarations: [HomeComponent, NavigationComponent, DiscountComponent],
-    entryComponents: [HomeComponent, NavigationComponent, DiscountComponent],
+    declarations: [
+        //
+        HomeComponent,
+        NavigationComponent,
+        DiscountComponent,
+    ],
+    entryComponents: [
+        //
+        HomeComponent,
+        NavigationComponent,
+        DiscountComponent,
+    ],
+    providers: [
+        //
+        httpServiceProvider,
+        CustomerService,
+    ],
 })
 export class AppModule {
     constructor(private upgrade: UpgradeModule) {}

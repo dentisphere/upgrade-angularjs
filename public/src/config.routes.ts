@@ -1,4 +1,4 @@
-import { CustomerService } from './customers/customerService';
+import { CustomerService } from './customers/customer.service';
 import { ProductService } from './products/productService';
 import { OrderService } from './orders/orderService';
 

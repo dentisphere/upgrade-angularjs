@@ -1,5 +1,5 @@
 import * as moment from 'moment';
-import { CustomerService } from '../customers/customerService';
+import { CustomerService } from '../customers/customer.service';
 import { AddressService } from '../shared/addressService';
 import { OrderService } from '../orders/orderService';
 

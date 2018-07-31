@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 import { ProductService } from '../products/productService';
-import { CustomerService } from '../customers/customerService';
+import { CustomerService } from '../customers/customer.service';
 
 export let orderDetailComponent: ng.IComponentOptions = {
     templateUrl: './orderDetail.html',
