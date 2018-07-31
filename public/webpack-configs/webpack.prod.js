@@ -1,4 +1,5 @@
 const path = require('path');
+const ngToolsWebpack = require('@ngtools/webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
@@ -6,6 +7,9 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const distFolder = path.resolve(__dirname, '../..', 'dist');
 
 module.exports = {
+    entry: {
+        app: './src/main.aot.ts',
+    },
     output: {
         filename: '[name].bundle.[hash].js',
         path: distFolder,
@@ -13,6 +17,11 @@ module.exports = {
 
     module: {
         rules: [
+            {
+                test: /\.ts$/,
+                use: '@ngtools/webpack',
+                exclude: /node_modules/,
+            },
             {
                 test: /\.css$/,
                 use: [MiniCssExtractPlugin.loader, 'css-loader'],
@@ -44,6 +53,10 @@ module.exports = {
                 },
                 canPrint: true,
             },
+        }),
+        new ngToolsWebpack.AngularCompilerPlugin({
+            tsConfigPath: './tsconfig.aot.json',
+            entryModule: path.resolve(__dirname, '../src/app.module.ts#AppModule'),
         }),
     ],
     optimization: {

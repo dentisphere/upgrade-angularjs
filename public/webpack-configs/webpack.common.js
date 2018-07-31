@@ -7,18 +7,6 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.ts$/,
-                use: [
-                    {
-                        loader: 'ts-loader',
-                        // https://github.com/TypeStrong/ts-loader/issues/267
-                        options: { onlyCompileBundledFiles: true },
-                    },
-                    'angular2-template-loader',
-                ],
-                exclude: /node_modules/,
-            },
-            {
                 test: /\.scss$/,
                 use: ['style-loader', 'css-loader', 'sass-loader'],
             },
