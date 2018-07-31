@@ -45,7 +45,7 @@ export function routeConfig($routeProvider: ng.route.IRouteProvider): void {
             },
         })
         .when('/products/:id', {
-            template: '<product-detail product="$resolve.product"></product-detail>',
+            template: '<product-detail [product]="$resolve.product"></product-detail>',
             resolve: {
                 product: [
                     '$route',

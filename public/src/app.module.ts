@@ -16,6 +16,7 @@ import { CustomerDetailComponent } from './customerDetail/customer-detail.compon
 import { CustomersComponent } from './customers/customers.component';
 import { OrderDetailComponent } from './orderDetail/order-detail.component';
 import { OrdersComponent } from './orders/orders.component';
+import { ProductDetailComponent } from './productDetail/product-detail.component';
 
 @NgModule({
     imports: [BrowserModule, UpgradeModule, FormsModule],
@@ -28,6 +29,7 @@ import { OrdersComponent } from './orders/orders.component';
         NavigationComponent,
         OrderDetailComponent,
         OrdersComponent,
+        ProductDetailComponent,
     ],
     entryComponents: [
         //
@@ -38,6 +40,7 @@ import { OrdersComponent } from './orders/orders.component';
         NavigationComponent,
         OrderDetailComponent,
         OrdersComponent,
+        ProductDetailComponent,
     ],
     providers: [
         //
