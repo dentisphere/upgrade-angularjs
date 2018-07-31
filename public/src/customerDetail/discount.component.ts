@@ -31,7 +31,6 @@ export class DiscountComponent implements OnInit {
     ];
 
     ngOnInit(): void {
-        console.log(this);
         this.selectedDiscount = _.find(
             this.discounts,
             (discount: any) => discount.discountId === this.customerDiscount.discountId,
