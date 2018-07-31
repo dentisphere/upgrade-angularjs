@@ -1,8 +1,10 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './styles/app.scss';
+import 'jquery';
+
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { UpgradeModule } from '@angular/upgrade/static';
-import moduleName from './app.module.ajs';
 import { HomeComponent } from './home/home.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { DiscountComponent } from './customerDetail/discount.component';
@@ -18,11 +20,15 @@ import { OrderDetailComponent } from './orderDetail/order-detail.component';
 import { OrdersComponent } from './orders/orders.component';
 import { ProductDetailComponent } from './productDetail/product-detail.component';
 import { ProductsComponent } from './products/products.component';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
-    imports: [BrowserModule, UpgradeModule, FormsModule],
+    imports: [BrowserModule, HttpClientModule, FormsModule, AppRoutingModule],
     declarations: [
         //
+        AppComponent,
         CustomerDetailComponent,
         CustomersComponent,
         DiscountComponent,
@@ -54,10 +60,6 @@ import { ProductsComponent } from './products/products.component';
         OrderService,
         ProductService,
     ],
+    bootstrap: [AppComponent],
 })
-export class AppModule {
-    constructor(private upgrade: UpgradeModule) {}
-    ngDoBootstrap() {
-        this.upgrade.bootstrap(document.documentElement, [moduleName], { strictDi: true });
-    }
-}
+export class AppModule {}
