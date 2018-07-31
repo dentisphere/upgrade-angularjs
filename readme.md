@@ -773,6 +773,107 @@ module.exports = {
 };
 ```
 
+## AOT (Ahead-of-Time)
+
+> The Angular Ahead-of-Time (AOT) compiler converts your Angular HTML and TypeScript code into efficient JavaScript code during the build phase before the browser downloads and runs that code
+
+This technique has several advantages (see [official documentation](https://angular.io/guide/aot-compiler#why-compile-with-aot) for details), mostly :
+
+-   Faster rendering
+-   Smaller Angular framework download size
+-   Detect template errors earlier
+
+I believe that using AOT is easier if you create project out of the box with angular-cli. But in our case, it is not that easy and several pitfalls must be avoided...
+
+We install these dependencies:
+
+```bash
+npm install --save-dev @angular/compiler-cli @ngtools/webpack
+```
+
+We create a new _main.aot.ts_ intended to replace _main.ts_ in production.
+
+```typescript
+import 'zone.js';
+import 'reflect-metadata';
+import { platformBrowser } from '@angular/platform-browser';
+import { setAngularLib } from '@angular/upgrade/static';
+import { AppModuleNgFactory } from './app.module.ngfactory'; // <==
+import { enableProdMode } from '@angular/core'; // <==
+
+import * as angular from 'angular';
+import { AppModule } from './app.module';
+
+setAngularLib(angular);
+enableProdMode(); // <==
+platformBrowser().bootstrapModuleFactory(AppModuleNgFactory); // <==
+```
+
+Notice that file _../aot/src/app.module.ngfactory_ does not exist on disk, it will be generated during bundling
+
+We also need distinct tsconfig for aot: _tsconfig.aot.json_
+
+```json
+{
+    "compilerOptions": {
+        "target": "es6",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "sourceMap": false, // <==
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "lib": ["es2016", "dom"], // <==
+        "noImplicitAny": true,
+        "suppressImplicitAnyIndexErrors": true,
+        "typeRoots": ["node_modules/@types"] // <==
+    },
+    "exclude": ["node_modules", "src/main.aot.ts"], // <==
+    // <==
+    "angularCompilerOptions": {
+        "genDir": "aot"
+    }
+}
+```
+
+while in _tsconfig.json_, we exclude _src/main.ts_
+
+```json
+    "exclude": ["node_modules", "src/main.ts"], // <==
+```
+
+the webpack .ts rule is moved from common to dev configuration, and we use another rule in production (with new entry point):
+
+```javascript
+const ngToolsWebpack = require('@ngtools/webpack');
+
+const distFolder = path.resolve(__dirname, '../..', 'dist');
+
+module.exports = {
+    entry: {
+        app: './src/main.aot.ts',
+    },
+    module: {
+        rules: [
+            {
+                test: /\.ts$/,
+                use: '@ngtools/webpack',
+                exclude: /node_modules/,
+            },
+        ],
+    },
+    plugins: [
+        new ngToolsWebpack.AngularCompilerPlugin({
+            tsConfigPath: './tsconfig.aot.json',
+            entryModule: path.resolve(__dirname, '../src/app.module.ts#AppModule'),
+        }),
+    ],
+};
+```
+
+### Notes
+
+-   now that templates are compiled as if they were injected in .ts files, we may encounter visibility problems since the template cannot access private variable in component class. Make sure fields used in template are public...
+
 # initial readme
 
 ## Order System Sample Project
