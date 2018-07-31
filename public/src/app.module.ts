@@ -16,7 +16,6 @@ import { CustomersComponent } from './customers/customers.component';
 import { CustomerService } from './customers/customer.service';
 import { DiscountComponent } from './customerDetail/discount.component';
 import { HomeComponent } from './home/home.component';
-import { httpServiceProvider } from './ajs-upgraded.providers';
 import { NavigationComponent } from './navigation/navigation.component';
 import { OrderDetailComponent } from './orderDetail/order-detail.component';
 import { OrdersComponent } from './orders/orders.component';
@@ -51,10 +50,10 @@ import { ProductService } from './products/product.service';
         ProductsComponent,
     ],
     providers: [
+        //
         AddressService,
         AuthenticationService,
         CustomerService,
-        httpServiceProvider,
         OrderService,
         ProductService,
     ],
