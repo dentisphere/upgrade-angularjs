@@ -3,8 +3,6 @@ import { Inject, Injectable } from '@angular/core';
 
 @Injectable()
 export class CustomerService {
-    public static $inject = ['$http'];
-
     constructor(@Inject('$http') private $http: ng.IHttpService) {}
 
     async getCustomers(): Promise<any> {
