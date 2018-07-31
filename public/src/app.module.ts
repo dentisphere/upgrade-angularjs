@@ -15,6 +15,7 @@ import { AuthenticationService } from './shared/authentication.service';
 import { CustomerDetailComponent } from './customerDetail/customer-detail.component';
 import { CustomersComponent } from './customers/customers.component';
 import { OrderDetailComponent } from './orderDetail/order-detail.component';
+import { OrdersComponent } from './orders/orders.component';
 
 @NgModule({
     imports: [BrowserModule, UpgradeModule, FormsModule],
@@ -26,6 +27,7 @@ import { OrderDetailComponent } from './orderDetail/order-detail.component';
         HomeComponent,
         NavigationComponent,
         OrderDetailComponent,
+        OrdersComponent,
     ],
     entryComponents: [
         //
@@ -35,6 +37,7 @@ import { OrderDetailComponent } from './orderDetail/order-detail.component';
         HomeComponent,
         NavigationComponent,
         OrderDetailComponent,
+        OrdersComponent,
     ],
     providers: [
         //

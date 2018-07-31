@@ -729,6 +729,27 @@ Best practice: use typescript elvis `?.` operator in templates to avoid errors w
 <h3>{{customer?.fullName}}</h3>
 ```
 
+Classic gotcha: as we replace `ctrl.` or `vm.` by `this.` when converting controller to class, this may cause scope problems when using lambdas
+in `array.forEach` or lodash functions. Try to use fat arrow syntax to avoid these gotchas.
+
+```typescript
+this.customers = [
+    /*...*/
+];
+this.orders.forEach(function(order: any) {
+    // ERROR: this.customers is undefined !
+    var customer = _.find(this.customers, function(customer) {
+        return order.customerId === customer.id;
+    });
+});
+this.orders.forEach((order: any) => {
+    // OK: using lexical this when using fat arrow functions!
+    var customer = _.find(this.customers, function(customer) {
+        return order.customerId === customer.id;
+    });
+});
+```
+
 # initial readme
 
 ## Order System Sample Project

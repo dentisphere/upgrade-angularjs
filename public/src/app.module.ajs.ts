@@ -15,7 +15,7 @@ import { CustomersComponent } from './customers/customers.component';
 import { CustomerService } from './customers/customer.service';
 import { NavigationComponent } from './navigation/navigation.component';
 import { OrderDetailComponent } from './orderDetail/order-detail.component';
-import { ordersComponent } from './orders/orders';
+import { OrdersComponent } from './orders/orders.component';
 import { OrderService } from './orders/order.service';
 import { productDetailComponent } from './productDetail/productDetail';
 import { productsComponent } from './products/products';
@@ -36,7 +36,7 @@ angular
     .directive('customers', downgradeComponent({ component: CustomersComponent }))
     .directive('navigation', downgradeComponent({ component: NavigationComponent }))
     .directive('orderDetail', downgradeComponent({ component: OrderDetailComponent }))
-    .component('orders', ordersComponent)
+    .directive('orders', downgradeComponent({ component: OrdersComponent }))
     .component('productDetail', productDetailComponent)
     .component('products', productsComponent)
     .factory('orderService', downgradeInjectable(OrderService))
