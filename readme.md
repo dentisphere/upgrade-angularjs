@@ -750,6 +750,29 @@ this.orders.forEach((order: any) => {
 });
 ```
 
+For some reason I don't understand, ts-loader compiles **all** .ts files by default, even if not part of the bundle. This causes spec files or any .ts file with errors to fail when bundle is created. There is an option to prevent this:
+
+```javascript
+module.exports = {
+    module: {
+        rules: [
+            {
+                test: /\.ts$/,
+                use: [
+                    {
+                        loader: 'ts-loader',
+                        // https://github.com/TypeStrong/ts-loader/issues/267
+                        options: { onlyCompileBundledFiles: true },
+                    },
+                    'angular2-template-loader',
+                ],
+                exclude: /node_modules/,
+            },
+        ],
+    },
+};
+```
+
 # initial readme
 
 ## Order System Sample Project

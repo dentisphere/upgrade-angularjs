@@ -8,7 +8,14 @@ module.exports = {
         rules: [
             {
                 test: /\.ts$/,
-                use: ['ts-loader', 'angular2-template-loader'],
+                use: [
+                    {
+                        loader: 'ts-loader',
+                        // https://github.com/TypeStrong/ts-loader/issues/267
+                        options: { onlyCompileBundledFiles: true },
+                    },
+                    'angular2-template-loader',
+                ],
                 exclude: /node_modules/,
             },
             {

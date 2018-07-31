@@ -5,6 +5,7 @@ import { expect } from 'chai';
 import * as sinon from 'sinon';
 import * as sinonChai from 'sinon-chai';
 import { CustomerService } from './customer.service';
+import { Customer } from './customer.interface';
 
 chai.use(sinonChai);
 
@@ -41,8 +42,8 @@ describe('Customer Service (TS version)', () => {
 
     describe('postCustomer(customer)', () => {
         it('posts /api/customers', () => {
-            const customer = {
-                dummy: 'customer',
+            const customer: Customer = {
+                fullName: 'customer',
             };
             customerService.postCustomer(customer);
             expect($httpMock.post).to.be.calledOnceWith('/api/customers', customer);

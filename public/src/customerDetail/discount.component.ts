@@ -1,18 +1,19 @@
 import * as _ from 'lodash';
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
+import { Discount } from '../customers/discount.interface';
 
 @Component({
     selector: 'discount',
     templateUrl: './discount.component.html',
 })
 export class DiscountComponent implements OnInit {
-    @Input() customerDiscount: any;
-    @Output() update = new EventEmitter<{ selectedDiscount: any }>();
+    @Input() customerDiscount: Discount;
+    @Output() update = new EventEmitter<SelectedDiscountEvent>();
 
     private edited = false;
     private isEdited: boolean;
-    private selectedDiscount: any = null;
-    private discounts = [
+    private selectedDiscount: Discount = null;
+    private discounts: Discount[] = [
         {
             discountId: 2,
             discountPercent: 5,
@@ -33,7 +34,7 @@ export class DiscountComponent implements OnInit {
     ngOnInit(): void {
         this.selectedDiscount = _.find(
             this.discounts,
-            (discount: any) => discount.discountId === this.customerDiscount.discountId,
+            discount => discount.discountId === this.customerDiscount.discountId,
         );
     }
 
@@ -45,4 +46,8 @@ export class DiscountComponent implements OnInit {
         this.isEdited = false;
         this.update.emit({ selectedDiscount: this.selectedDiscount });
     }
+}
+
+export interface SelectedDiscountEvent {
+    selectedDiscount: Discount;
 }

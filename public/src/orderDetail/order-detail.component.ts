@@ -2,15 +2,17 @@ import * as _ from 'lodash';
 import { ProductService } from '../products/product.service';
 import { CustomerService } from '../customers/customer.service';
 import { Component, OnInit, Input } from '@angular/core';
+import { Order } from '../orders/order.interface';
+import { Customer } from '../customers/customer.interface';
 
 @Component({
     selector: 'order-detail',
     templateUrl: './order-detail.component.html',
 })
 export class OrderDetailComponent implements OnInit {
-    @Input() order: any;
+    @Input() order: Order;
     private title = 'Order Detail';
-    private customer: any;
+    private customer: Customer;
 
     constructor(private productService: ProductService, private customerService: CustomerService) {}
 
@@ -22,7 +24,7 @@ export class OrderDetailComponent implements OnInit {
             this.customerService.getCustomer(this.order.customerId),
         ]);
 
-        this.order.items.forEach((item: any) => {
+        this.order.items.forEach(item => {
             var product = _.find(products, product => {
                 return product.id === item.productId;
             });
