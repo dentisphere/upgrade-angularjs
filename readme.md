@@ -971,3 +971,9 @@ const routes: Routes = [
 })
 export class AppRoutingModule {}
 ```
+
+## clean up angular JS
+
+-   remove setAngularLib in main and main.aot
+-   delete source code related to angular JS (config.routes, config.hashprefix, app.module.ajs, ajs-upgraded.providers)
+-   uninsall useless package (@angular/upgrade, angular, angular-route, @types/angular)
