@@ -4,6 +4,7 @@ import { CustomerService } from '../customers/customer.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { Order } from '../orders/order.interface';
 import { Customer } from '../customers/customer.interface';
+import { Product } from '../products/product.interface';
 
 @Component({
     selector: 'order-detail',
@@ -17,7 +18,7 @@ export class OrderDetailComponent implements OnInit {
     constructor(private productService: ProductService, private customerService: CustomerService) {}
 
     async ngOnInit(): Promise<void> {
-        let products: any[];
+        let products: Product[];
 
         [products, this.customer] = await Promise.all([
             this.productService.getProducts(),
