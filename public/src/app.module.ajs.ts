@@ -13,7 +13,7 @@ import { customerDetailComponent } from './customerDetail/customerDetail';
 import { discountComponent } from './customerDetail/discount';
 import { customersComponent } from './customers/customers';
 import { CustomerService } from './customers/customerService';
-import { navigationComponent } from './navigation/navigation';
+import { NavigationComponent } from './navigation/navigation.component';
 import { orderDetailComponent } from './orderDetail/orderDetail';
 import { ordersComponent } from './orders/orders';
 import { OrderService } from './orders/orderService';
@@ -34,7 +34,7 @@ angular
     .component('customerDetail', customerDetailComponent)
     .component('discount', discountComponent)
     .component('customers', customersComponent)
-    .component('navigation', navigationComponent)
+    .directive('navigation', downgradeComponent({ component: NavigationComponent }))
     .component('orderDetail', orderDetailComponent)
     .component('orders', ordersComponent)
     .component('productDetail', productDetailComponent)
