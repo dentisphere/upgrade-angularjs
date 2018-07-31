@@ -18,7 +18,7 @@ import { OrderDetailComponent } from './orderDetail/order-detail.component';
 import { OrdersComponent } from './orders/orders.component';
 import { OrderService } from './orders/order.service';
 import { ProductDetailComponent } from './productDetail/product-detail.component';
-import { productsComponent } from './products/products';
+import { ProductsComponent } from './products/products.component';
 import { ProductService } from './products/product.service';
 import { AuthenticationService } from './shared/authentication.service';
 import { downgradeComponent, downgradeInjectable } from '@angular/upgrade/static';
@@ -38,7 +38,7 @@ angular
     .directive('orderDetail', downgradeComponent({ component: OrderDetailComponent }))
     .directive('orders', downgradeComponent({ component: OrdersComponent }))
     .directive('productDetail', downgradeComponent({ component: ProductDetailComponent }))
-    .component('products', productsComponent)
+    .directive('products', downgradeComponent({ component: ProductsComponent }))
     .factory('orderService', downgradeInjectable(OrderService))
     .factory('customerService', downgradeInjectable(CustomerService))
     .factory('productService', downgradeInjectable(ProductService))
