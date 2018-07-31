@@ -43,4 +43,4 @@ angular
     .factory('customerService', downgradeInjectable(CustomerService))
     .factory('productService', downgradeInjectable(ProductService))
     .factory('addressService', downgradeInjectable(AddressService))
-    .service('authenticationService', AuthenticationService);
+    .factory('authenticationService', downgradeInjectable(AuthenticationService));
