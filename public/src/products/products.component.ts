@@ -6,7 +6,7 @@ import { Product } from './product.interface';
     templateUrl: './products.component.html',
 })
 export class ProductsComponent implements OnInit {
-    private title = 'Products';
+    title = 'Products';
     products: Product[];
 
     constructor(private productService: ProductService) {}

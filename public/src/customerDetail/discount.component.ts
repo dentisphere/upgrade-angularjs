@@ -10,10 +10,10 @@ export class DiscountComponent implements OnInit {
     @Input() customerDiscount: Discount;
     @Output() update = new EventEmitter<SelectedDiscountEvent>();
 
-    private edited = false;
-    private isEdited: boolean;
-    private selectedDiscount: Discount = null;
-    private discounts: Discount[] = [
+    edited = false;
+    isEdited: boolean;
+    selectedDiscount: Discount = null;
+    discounts: Discount[] = [
         {
             discountId: 2,
             discountPercent: 5,

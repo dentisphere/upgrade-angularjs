@@ -5,7 +5,7 @@ import { OnInit, Component } from '@angular/core';
     templateUrl: './navigation.component.html',
 })
 export class NavigationComponent implements OnInit {
-    private companyName: string;
+    companyName: string;
 
     ngOnInit(): void {
         this.companyName = 'Awesome, Inc.';

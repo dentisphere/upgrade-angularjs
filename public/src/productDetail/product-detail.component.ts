@@ -7,5 +7,5 @@ import { Product } from '../products/product.interface';
 })
 export class ProductDetailComponent {
     @Input() product: Product;
-    private title = 'Product Detail';
+    title = 'Product Detail';
 }

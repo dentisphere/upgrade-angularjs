@@ -12,8 +12,8 @@ import { Product } from '../products/product.interface';
 })
 export class OrderDetailComponent implements OnInit {
     @Input() order: Order;
-    private title = 'Order Detail';
-    private customer: Customer;
+    title = 'Order Detail';
+    customer: Customer;
 
     constructor(private productService: ProductService, private customerService: CustomerService) {}
 

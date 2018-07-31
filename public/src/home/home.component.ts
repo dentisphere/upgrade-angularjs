@@ -5,7 +5,7 @@ import { OnInit, Component } from '@angular/core';
     templateUrl: './home.component.html',
 })
 export class HomeComponent implements OnInit {
-    private title: string;
+    title: string;
 
     ngOnInit(): void {
         this.title = 'Awesome, Inc. Internal Ordering System';

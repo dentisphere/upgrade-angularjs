@@ -10,9 +10,9 @@ import { Order } from './order.interface';
     templateUrl: './orders.component.html',
 })
 export class OrdersComponent implements OnInit {
-    private title = 'Orders';
-    private customers: Customer[];
-    private orders: Order[];
+    title = 'Orders';
+    customers: Customer[];
+    orders: Order[];
 
     constructor(private orderService: OrderService, private customerService: CustomerService) {}
 
