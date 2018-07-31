@@ -30,8 +30,8 @@ function controller(
         });
     };
 
-    ctrl.updateDiscount = function(selectedDiscount: any): void {
-        ctrl.customer.discount = selectedDiscount;
+    ctrl.updateDiscount = function($event: any): void {
+        ctrl.customer.discount = $event.selectedDiscount;
         customerService.postCustomer(ctrl.customer);
     };
 }

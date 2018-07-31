@@ -19,8 +19,8 @@
 </div>
 <discount
     data-ng-if="$ctrl.customer.getsDiscount"
-    customer-discount="$ctrl.customer.discount"
-    update="$ctrl.updateDiscount(selectedDiscount)"
+    [customer-discount]="$ctrl.customer.discount"
+    (update)='$ctrl.updateDiscount($event)'
 ></discount>
 <div
     class="row"

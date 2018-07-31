@@ -611,6 +611,74 @@ and is also larger in prod (1.6 MB)
 
 We now have a starting point for upgrading our angular js elements to angular
 
+## upgrade angular js element + downgrade
+
+to upgrade a component:
+
+1.  rename home.ts to home.component.ts
+1.  transform controller function to class and export it
+    -   add @Component annotation with {selector, templateUrl}
+    -   implements OnInit if necessary
+1.  update template
+    -   remove $ctrl
+    -   convert ng-if to \*ngIf
+    -   convert ng-repeat to \*ngFor
+    -   main differences can be found [here](https://angular.io/guide/ajs-quick-reference)
+1.  replace component declaration by directive in app.module.ajs
+    `.directive('home', downgradeComponent({ component: HomeComponent }))`
+1.  add component to declarations and entrypoints un app.module
+
+### notes
+
+I spent some time to figure out how to bind elements in angular JS template (parent component) for a downgraded element (child element). It turns out you must keep your directive
+unchanged in parent template **except you must had [] or () for interpolation**. Thus,
+
+```html
+<discount
+    data-ng-if="$ctrl.customer.getsDiscount"
+    customer-discount="$ctrl.customer.discount"
+    update="$ctrl.updateDiscount(selectedDiscount)"
+></discount>
+```
+
+becomes
+
+```html
+<discount
+    data-ng-if="$ctrl.customer.getsDiscount"
+    [customer-discount]="$ctrl.customer.discount"
+    (update)='$ctrl.updateDiscount($event)'
+></discount>
+```
+
+another change to be made in parent template is the way callbacks arguments are passed
+
+```typescript
+ctrl.updateDiscount = function(selectedDiscount: any): void {
+    ctrl.customer.discount = selectedDiscount;
+    customerService.postCustomer(ctrl.customer);
+};
+```
+
+becomes
+
+```typescript
+ctrl.updateDiscount = function($event: any): void {
+    ctrl.customer.discount = $event.selectedDiscount;
+    customerService.postCustomer(ctrl.customer);
+};
+```
+
+Make sure to give a generic parameter to the EventEmitter, otherwise no data will be passed when callback is invoked:
+
+```typescript
+    @Output() update = new EventEmitter<any>();
+    // or, better
+    @Output() update = new EventEmitter<{selectedDiscount: any}>();
+    // or, even better, but requires Discount interface to have been declared
+    @Output() update = new EventEmitter<{selectedDiscount: Discount}>();
+```
+
 # initial readme
 
 ## Order System Sample Project

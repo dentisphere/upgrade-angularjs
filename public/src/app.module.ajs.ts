@@ -10,7 +10,7 @@ import { hashPrefixConfig } from './config.hashprefix';
 import { routeConfig } from './config.routes';
 import { AddressService } from './shared/addressService';
 import { customerDetailComponent } from './customerDetail/customerDetail';
-import { discountComponent } from './customerDetail/discount';
+import { DiscountComponent } from './customerDetail/discount.component';
 import { customersComponent } from './customers/customers';
 import { CustomerService } from './customers/customerService';
 import { NavigationComponent } from './navigation/navigation.component';
@@ -32,7 +32,7 @@ angular
     .config(routeConfig)
     .directive('home', downgradeComponent({ component: HomeComponent }))
     .component('customerDetail', customerDetailComponent)
-    .component('discount', discountComponent)
+    .directive('discount', downgradeComponent({ component: DiscountComponent }))
     .component('customers', customersComponent)
     .directive('navigation', downgradeComponent({ component: NavigationComponent }))
     .component('orderDetail', orderDetailComponent)

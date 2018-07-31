@@ -4,32 +4,35 @@
     </div>
     <div
         class="col-md-4"
-        ng-if="!$ctrl.isEdited"
+        *ngIf="!isEdited"
     >
-        {{$ctrl.customerDiscount.discountName}}
+        {{customerDiscount.discountName}}
     </div>
     <div
         class="col-md-4"
-        ng-if="$ctrl.isEdited"
+        *ngIf="isEdited"
     >
         <select
             class="form-control"
             id="inputDiscountType"
-            data-ng-options="discount as discount.discountName for discount in $ctrl.discounts"
-            data-ng-model="$ctrl.selectedDiscount"
+            [(ngModel)]="selectedDiscount"
         >
+            <option
+                *ngFor="let discount of discounts"
+                [ngValue]="discount"
+            >{{discount.discountName}}</option>
         </select>
     </div>
     <div class="col-md-2 end">
         <button
             class='btn btn-primary btn-sm nopadding'
-            ng-if="!$ctrl.isEdited"
-            data-ng-click="$ctrl.edit()"
+            *ngIf="!isEdited"
+            (click)="edit()"
         >Edit</button>
         <button
             class='btn btn-primary btn-sm nopadding'
-            ng-if="$ctrl.isEdited"
-            data-ng-click="$ctrl.save()"
+            *ngIf="isEdited"
+            (click)="save()"
         >Save</button>
     </div>
 </div>
@@ -38,6 +41,6 @@
         <b>Discount Percent:</b>
     </div>
     <div class="col-md-4 end">
-        {{$ctrl.customerDiscount.discountPercent}}%
+        {{customerDiscount.discountPercent}}%
     </div>
 </div>
