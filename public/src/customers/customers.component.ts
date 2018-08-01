@@ -11,8 +11,10 @@ export class CustomersComponent implements OnInit {
 
     constructor(private customerService: CustomerService) {}
 
-    async ngOnInit(): Promise<void> {
+    ngOnInit(): void {
         this.title = 'Customers';
-        this.customers = await this.customerService.getCustomers();
+        this.customerService.getCustomers().subscribe(customers => {
+            this.customers = customers;
+        });
     }
 }

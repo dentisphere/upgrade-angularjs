@@ -1,20 +1,21 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Customer } from './customer.interface';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class CustomerService {
     constructor(private http: HttpClient) {}
 
-    getCustomers(): Promise<Customer[]> {
-        return this.http.get<Customer[]>('/api/customers').toPromise();
+    getCustomers(): Observable<Customer[]> {
+        return this.http.get<Customer[]>('/api/customers');
     }
 
-    getCustomer(id: number): Promise<Customer> {
-        return this.http.get<Customer>(`/api/customers/${id}`).toPromise();
+    getCustomer(id: number): Observable<Customer> {
+        return this.http.get<Customer>(`/api/customers/${id}`);
     }
 
-    postCustomer(customer: Customer): Promise<Customer> {
-        return this.http.post<Customer>('/api/customers', customer).toPromise();
+    postCustomer(customer: Customer): Observable<Customer> {
+        return this.http.post<Customer>('/api/customers', customer);
     }
 }

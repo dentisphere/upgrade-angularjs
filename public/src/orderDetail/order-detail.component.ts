@@ -6,6 +6,8 @@ import { Order } from '../orders/order.interface';
 import { Customer } from '../customers/customer.interface';
 import { Product } from '../products/product.interface';
 import { ActivatedRoute } from '@angular/router';
+import { map, tap, flatMap } from 'rxjs/operators';
+import { forkJoin } from 'rxjs';
 
 @Component({
     selector: 'order-detail',
@@ -22,23 +24,29 @@ export class OrderDetailComponent implements OnInit {
         private route: ActivatedRoute,
     ) {}
 
-    async ngOnInit(): Promise<void> {
+    ngOnInit(): void {
         let products: Product[];
 
-        this.route.data.subscribe(async data => {
-            this.order = data.order;
-            [products, this.customer] = await Promise.all([
-                this.productService.getProducts(),
-                this.customerService.getCustomer(this.order.customerId),
-            ]);
-
-            this.order.items.forEach(item => {
-                var product = _.find(products, product => {
-                    return product.id === item.productId;
-                });
-                item.productName = product.name;
-                item.itemPrice = item.quantity * product.price;
-            });
-        });
+        this.route.data
+            .pipe(
+                map(data => data.order),
+                tap(order => {
+                    this.order = order;
+                }),
+                flatMap(order =>
+                    forkJoin([this.productService.getProducts(), this.customerService.getCustomer(order.customerId)]),
+                ),
+                tap(productsAndCustomers => {
+                    [products, this.customer] = productsAndCustomers;
+                    this.order.items.forEach(item => {
+                        var product = _.find(products, product => {
+                            return product.id === item.productId;
+                        });
+                        item.productName = product.name;
+                        item.itemPrice = item.quantity * product.price;
+                    });
+                }),
+            )
+            .subscribe();
     }
 }

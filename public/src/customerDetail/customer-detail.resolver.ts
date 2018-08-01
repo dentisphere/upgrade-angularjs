@@ -3,23 +3,21 @@ import { Resolve, Router, RouterStateSnapshot, ActivatedRouteSnapshot } from '@a
 import { Customer } from '../customers/customer.interface';
 import { Observable } from 'rxjs';
 import { CustomerService } from '../customers/customer.service';
+import { tap, take } from 'rxjs/operators';
 
 @Injectable()
 export class CustomerDetailResolver implements Resolve<Customer> {
     constructor(private customerService: CustomerService, private router: Router) {}
 
-    resolve(
-        route: ActivatedRouteSnapshot,
-        state: RouterStateSnapshot,
-    ): Customer | Observable<Customer> | Promise<Customer> {
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Customer> {
         let id = Number(route.paramMap.get('id'));
-        return this.customerService.getCustomer(id).then(customer => {
-            if (customer) {
-                return customer;
-            } else {
-                this.router.navigate(['/customers']);
-                return null;
-            }
-        });
+        return this.customerService.getCustomer(id).pipe(
+            take(1),
+            tap(customer => {
+                if (!customer) {
+                    this.router.navigate(['/customers']);
+                }
+            }),
+        );
     }
 }

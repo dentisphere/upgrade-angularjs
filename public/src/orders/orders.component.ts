@@ -4,6 +4,7 @@ import { OrderService } from './order.service';
 import { OnInit, Component } from '@angular/core';
 import { Customer } from '../customers/customer.interface';
 import { Order } from './order.interface';
+import { forkJoin } from 'rxjs';
 
 @Component({
     selector: 'orders',
@@ -16,16 +17,15 @@ export class OrdersComponent implements OnInit {
 
     constructor(private orderService: OrderService, private customerService: CustomerService) {}
 
-    async ngOnInit(): Promise<void> {
-        [this.customers, this.orders] = await Promise.all([
-            this.customerService.getCustomers(),
-            this.orderService.getOrders(),
-        ]);
-        this.orders.forEach(order => {
-            var customer = _.find(this.customers, customer => {
-                return order.customerId === customer.id;
+    ngOnInit(): void {
+        forkJoin([this.customerService.getCustomers(), this.orderService.getOrders()]).subscribe(res => {
+            [this.customers, this.orders] = res;
+            this.orders.forEach(order => {
+                var customer = _.find(this.customers, customer => {
+                    return order.customerId === customer.id;
+                });
+                order.customerName = customer.fullName;
             });
-            order.customerName = customer.fullName;
         });
     }
 }
